@@ -21,7 +21,7 @@ public class Manager {
         flights.put(flight.getNumber(), flight);
 //        flights.add(flight); // Add a new flight to the list
     }
-
+//asasas
     public void removeFlight(String number) {
         dbManager.removeFlight(number);
 //        flights.removeIf(flight -> flight.getNumber().equals(number)); // Remove a flight from the list by flight number
