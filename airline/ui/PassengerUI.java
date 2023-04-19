@@ -1,7 +1,5 @@
 package com.airline.ui;
 
-import com.airline.models.Airplane;
-import com.airline.models.Flight;
 import com.airline.models.Passenger;
 import javafx.application.Application;
 import javafx.geometry.Insets;

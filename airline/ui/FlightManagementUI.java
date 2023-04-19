@@ -1,9 +1,7 @@
 package com.airline.ui;
 
 import com.airline.models.Airport;
-import com.airline.models.Flight; // Add this import
 import com.airline.management.FlightManagement;
-import com.airline.models.Airplane;
 
 
 import javafx.application.Application;
