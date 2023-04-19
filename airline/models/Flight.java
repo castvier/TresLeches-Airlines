@@ -1,5 +1,6 @@
 package com.airline.models;
 
+
 public class Flight {
 
     // Declare fields to store flight data

@@ -1,5 +1,7 @@
 package com.airline.ui;
 
+import com.airline.models.Airplane;
+import com.airline.models.Flight;
 import com.airline.models.Passenger;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -14,7 +16,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 /**
  * PassengerUI
  */
