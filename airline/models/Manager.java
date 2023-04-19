@@ -1,4 +1,3 @@
-//manager java
 package com.airline.models;
 
 import java.util.ArrayList;
