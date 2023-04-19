@@ -5,8 +5,6 @@ import com.airline.models.Flight; // Add this import
 import com.airline.management.FlightManagement;
 import com.airline.models.Airplane;
 
-
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

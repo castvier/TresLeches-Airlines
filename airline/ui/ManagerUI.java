@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Optional;
 
-
 public class ManagerUI extends Application {
     private Manager manager;
     private TextField flightNumberField;
