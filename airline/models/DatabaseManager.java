@@ -12,6 +12,7 @@ import java.util.Optional;
 //JJAS
 
 public class DatabaseManager {
+    //JJAS
     private static final String DB_URL = "jdbc:sqlite:tresLechesAirlines.db";
 
     public DatabaseManager() {
