@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class Manager {
+    private DatabaseManager dbManager;
     private ArrayList<Flight> flights; // List of flights managed by this Manager instance
 
     public Manager(ArrayList<Flight> flights) {
