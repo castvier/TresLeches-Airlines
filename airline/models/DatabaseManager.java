@@ -15,6 +15,8 @@ public class DatabaseManager {
     //JJAS
     private static final String DB_URL = "jdbc:sqlite:tresLechesAirlines.db";
 
+    //jimwell
+
     public DatabaseManager() {
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
             if (conn != null) {
