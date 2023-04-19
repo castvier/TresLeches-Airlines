@@ -1,4 +1,4 @@
-Author: Edwin <edwin.rivera.410@my.csun.edu>
+package com.airline.models;
 
 public class Flight {
 
