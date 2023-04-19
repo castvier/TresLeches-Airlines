@@ -1,10 +1,11 @@
 package com.airline.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 
 public class Manager {
-
+    private HashMap<String, Flight> flights; // HashMap of flights managed by this Manager instance
     private ArrayList<Flight> flights; // List of flights managed by this Manager instance
 
     public Manager(ArrayList<Flight> flights) {
