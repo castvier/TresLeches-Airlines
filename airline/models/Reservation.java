@@ -9,7 +9,7 @@ public class Reservation {
     private String arrivalAirport; // arrival airport code
     private String departureDate; // departure date
     private String departureTime; // departure time
-    private Baggage baggage; // baggage information //asd
+    private Baggage baggage; // baggage information
 
     // Constructor
     public Reservation(String passengerName, String passengerEmail, String flightNumber, String departureAirport, String arrivalAirport, String departureDate, String departureTime) {

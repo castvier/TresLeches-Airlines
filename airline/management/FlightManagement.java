@@ -1,7 +1,7 @@
 package com.airline.management;
 
-import com.airline.models.Airport;
-import com.airline.models.Flight; // Add this import statement
+import com.airline.models.Airport; // Add this import statement
+import com.airline.models.Flight;
 
 import java.util.ArrayList;
 

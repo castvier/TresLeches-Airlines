@@ -88,4 +88,3 @@ public class AirplaneUI extends Application {
         return borderPane; // Return the instance variable borderPane as the root of the UI
     }
 }
-
