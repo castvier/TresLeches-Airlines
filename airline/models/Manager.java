@@ -31,6 +31,7 @@ public class Manager {
         // Search for a flight by flight number and return it as an Optional object
     }
 
+   //set new departure and arrival times for flight
     public void updateFlight(Flight flight, String departureTime, String arrivalTime) {
         flight.setDepartureTime(departureTime); // Set a new departure time for the flight
         flight.setArrivalTime(arrivalTime); // Set a new arrival time for the flight
