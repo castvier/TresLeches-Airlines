@@ -1,5 +1,7 @@
 package com.airline.ui;
 
+import com.airline.models.Airplane;
+import com.airline.models.Flight;
 import com.airline.models.Manager;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -17,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Optional;
+
 
 public class ManagerUI extends Application {
     private Manager manager;
