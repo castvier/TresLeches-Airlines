@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 
+//JJ
+
 public class DatabaseManager {
     private static final String DB_URL = "jdbc:sqlite:tresLechesAirlines.db";
 
