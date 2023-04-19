@@ -1,5 +1,6 @@
 package com.airline.models;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -87,5 +88,3 @@ public class Airport {
         return sb.toString();
     }
 }
-
-
