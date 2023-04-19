@@ -1,6 +1,10 @@
 package com.airline.ui;
 
 import com.airline.models.Manager;
+import com.airline.models.Flight; // Add this import statement
+import com.airline.models.Airplane; // Add this import statement if not already imported
+
+import com.airline.models.Manager;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
