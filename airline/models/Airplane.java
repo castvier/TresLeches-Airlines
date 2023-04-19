@@ -1,7 +1,7 @@
 package com.airline.models;
 
 public class Airplane {
-    private final String model;
+    private final String model; //Edwin
     private final int capacity;
     private final int range;
     private final String serialNumber;
