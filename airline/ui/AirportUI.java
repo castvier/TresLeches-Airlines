@@ -1,5 +1,3 @@
-//airport UI
-
 package com.airline.ui;
 
 import com.airline.models.Airport;

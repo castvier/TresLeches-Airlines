@@ -1,4 +1,3 @@
-//manager ui
 package com.airline.ui;
 
 import com.airline.models.Airplane;
