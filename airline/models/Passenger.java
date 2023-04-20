@@ -1,5 +1,4 @@
 package com.airline.models;
-
 // Passenger class manages personal data along with their seat assignments.
 
 public class Passenger {
@@ -10,7 +9,6 @@ public class Passenger {
     private String email; // email address
     private String phoneNumber; // phone number
     private String seatNumber; // assigned seat number
-
     public Passenger(String name, int age, String email, String phoneNumber) {
         this.name = name; // setting passenger's name
         this.age = age; // age
@@ -24,7 +22,6 @@ public class Passenger {
     public String getName() {
         return name; // Get the passenger's name
     }
-
     public String getPhoneNumber() {
         return phoneNumber; // Get the passenger's phone number
     }
