@@ -18,11 +18,9 @@ public class Passenger {
         this.phoneNumber = phoneNumber; // Set the passenger's phone number
 
     }
-
     public void setName(String name) {
         this.name = name; // Set a new name for the passenger
     }
-
     public String getName() {
         return name; // Get the passenger's name
     }
@@ -30,7 +28,6 @@ public class Passenger {
     public String getPhoneNumber() {
         return phoneNumber; // Get the passenger's phone number
     }
-
     public String getEmail() {
         return email; // Get the passenger's email address
     }
