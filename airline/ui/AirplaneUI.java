@@ -64,18 +64,36 @@ public class AirplaneUI extends Application {
 
         // Set up the scene and stage
         Scene scene = new Scene(borderPane, 800, 450);
+        scene.getStylesheets().add(getClass().getResource("airplaneUIStyles.css").toExternalForm());
         borderPane.setCenter(vBox);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Airplane Console");
         primaryStage.show();
     }
+    private boolean isInteger(String input) {
+        try {
+            Integer.parseInt(input);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 
     public void handleCreateAirplaneButton() {
         // Get input values from text fields
         String model = modelField.getText();
-        int capacity = Integer.parseInt(capacityField.getText());
-        int range = Integer.parseInt(rangeField.getText());
+        String capacityString = capacityField.getText();
+        String rangeString = rangeField.getText();
         String serialNumber = serialNumberField.getText();
+
+        // Validate input
+        if (!isInteger(capacityString) || !isInteger(rangeString)) {
+            airplaneLabel.setText("Error: Capacity and Range must be valid integers.");
+            return;
+        }
+
+        int capacity = Integer.parseInt(capacityString);
+        int range = Integer.parseInt(rangeString);
 
         // Create a new Airplane instance
         airplane = new Airplane(model, capacity, range, serialNumber);
@@ -83,6 +101,7 @@ public class AirplaneUI extends Application {
         // Update airplaneLabel with the new Airplane's details
         airplaneLabel.setText("Airplane Created: Model - " + airplane.getModel() + ", Capacity - " + airplane.getCapacity() + ", Range - " + airplane.getRange() + ", Serial Number - " + airplane.getSerialNumber());
     }
+
 
     public Parent getRoot9() {
         return borderPane; // Return the instance variable borderPane as the root of the UI
