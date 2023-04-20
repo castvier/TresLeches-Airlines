@@ -13,30 +13,30 @@ public class Passenger {
         this.name = name; // setting passenger's name
         this.age = age; // age
         this.email = email; // email address
-        this.phoneNumber = phoneNumber; // Set the passenger's phone number
+        this.phoneNumber = phoneNumber; // phone number
     }
 
     public void setName(String name) {
-        this.name = name; // Set a new name for the passenger
+        this.name = name; // new name for the passenger
     }
 
     public String getName() {
-        return name; // Get the passenger's name
+        return name; // getting the passenger's name
     }
 
     public String getPhoneNumber() {
-        return phoneNumber; // Get the passenger's phone number
+        return phoneNumber; // passenger's phone number
     }
 
     public String getEmail() {
-        return email; // Get the passenger's email address
+        return email; // passenger's email
     }
 
     public String getSeatNumber() {
-        return seatNumber; // Get the passenger's assigned seat number
+        return seatNumber; // passenger's assigned seat
     }
 
     public void setSeatNumber(String seatNumber) {
-        this.seatNumber = seatNumber; // Set a new seat number for the passenger
+        this.seatNumber = seatNumber; // seat number for the passenger
     }
 }
