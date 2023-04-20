@@ -1,19 +1,18 @@
 package com.airline.models;
 
-// Passenger class to manage passenger personal data and seat assignments
+// Passenger class manages personal data along with their seat assignments.
 public class Passenger {
 
-    // comment update
-    private String name; // Passenger's name
-    private final int age; // Passenger's age, cannot be changed once set
-    private String email; // Passenger's email address
-    private String phoneNumber; // Passenger's phone number
-    private String seatNumber; // Passenger's assigned seat number
+    private String name; // name of passenger
+    private final int age; // age final because can't be changed afterwards
+    private String email; // email address
+    private String phoneNumber; // phone number
+    private String seatNumber; // assigned seat number
 
     public Passenger(String name, int age, String email, String phoneNumber) {
-        this.name = name; // Set the passenger's name
-        this.age = age; // Set the passenger's age
-        this.email = email; // Set the passenger's email address
+        this.name = name; // setting passenger's name
+        this.age = age; // age
+        this.email = email; // email address
         this.phoneNumber = phoneNumber; // Set the passenger's phone number
     }
 
