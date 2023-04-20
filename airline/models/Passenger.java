@@ -2,7 +2,7 @@ package com.airline.models;
 
 // Passenger class to manage passenger personal data and seat assignments
 public class Passenger {
-
+    // comment update
     private String name; // Passenger's name
     private final int age; // Passenger's age, cannot be changed once set
     private String email; // Passenger's email address
