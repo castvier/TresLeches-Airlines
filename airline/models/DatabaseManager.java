@@ -47,7 +47,7 @@ public class DatabaseManager {
         }
     }
 
-    public void addFlight(Flight flight) {
+    public void addFlight(Flight flight) { //added this
         String sql = "INSERT INTO flights (number, departure_time, arrival_time, origin, destination, airplane_id, price, capacity) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
