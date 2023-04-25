@@ -20,11 +20,14 @@ public class DatabaseManager {
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
             if (conn != null) {
                 createFlightTable();
+                createPaymentTable();
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
     }
+
+
 
     private void createFlightTable() {
         String sql = "CREATE TABLE IF NOT EXISTS flights (" +
@@ -68,7 +71,6 @@ public class DatabaseManager {
             System.err.println(e.getMessage()); // Print the error message from the SQLException
         }
     }
-
 
 
     public void removeFlight(String number) {
@@ -123,5 +125,116 @@ public class DatabaseManager {
         // Implement the conversion logic
         // You may need to handle how to retrieve the associated Airplane object
         return null; // Replace with the actual Flight object
+    }
+
+
+    private void createPaymentTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS payments (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "payment_processor TEXT NOT NULL," +
+                "payment_method TEXT NOT NULL," +
+                "card_number TEXT NOT NULL," +
+                "card_holder_name TEXT NOT NULL," +
+                "card_expiry TEXT NOT NULL," +
+                "card_cvc TEXT NOT NULL" +
+                ");";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public void addPayment(Payment payment) {
+        String sql = "INSERT INTO payments (payment_processor, payment_method, card_number, card_holder_name, card_expiry, card_cvc) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, payment.getPaymentProcessor());
+            pstmt.setString(2, payment.getPaymentMethod());
+            pstmt.setString(3, payment.getCardNumber());
+            pstmt.setString(4, payment.getCardHolderName());
+            pstmt.setString(5, payment.getCardExpiry());
+            pstmt.setString(6, payment.getCardCVC());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    private void createReservationTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS reservations (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "passenger_name TEXT NOT NULL," +
+                "passenger_email TEXT NOT NULL," +
+                "flight_number TEXT NOT NULL," +
+                "departure_airport TEXT NOT NULL," +
+                "arrival_airport TEXT NOT NULL," +
+                "departure_date TEXT NOT NULL," +
+                "departure_time TEXT NOT NULL," +
+                "baggage_weight REAL NOT NULL" +
+                ");";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public void addReservation(Reservation reservation) {
+        String sql = "INSERT INTO reservations (passenger_name, passenger_email, flight_number, departure_airport, arrival_airport, departure_date, departure_time, baggage_weight) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, reservation.getPassengerName());
+            pstmt.setString(2, reservation.getPassengerEmail());
+            pstmt.setString(3, reservation.getFlightNumber());
+            pstmt.setString(4, reservation.getDepartureAirport());
+            pstmt.setString(5, reservation.getArrivalAirport());
+            pstmt.setString(6, reservation.getDepartureDate());
+            pstmt.setString(7, reservation.getDepartureTime());
+//            pstmt.setDouble(8, reservation.getBaggage().getWeight());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public void updateReservation(int reservationId, Reservation updatedReservation) {
+        String sql = "UPDATE reservations SET passenger_name = ?, passenger_email = ?, flight_number = ?, departure_airport = ?, arrival_airport = ?, departure_date = ?, departure_time = ?, baggage_weight = ? WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, updatedReservation.getPassengerName());
+            pstmt.setString(2, updatedReservation.getPassengerEmail());
+            pstmt.setString(3, updatedReservation.getFlightNumber());
+            pstmt.setString(4, updatedReservation.getDepartureAirport());
+            pstmt.setString(5, updatedReservation.getArrivalAirport());
+            pstmt.setString(6, updatedReservation.getDepartureDate());
+            pstmt.setString(7, updatedReservation.getDepartureTime());
+            // pstmt.setDouble(8, updatedReservation.getBaggage().getWeight()); // Uncomment this line if the `getWeight()` method is available in the Baggage class
+            pstmt.setInt(9, reservationId);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+
+    public void deleteReservation(int reservationId) {
+        String sql = "DELETE FROM reservations WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, reservationId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+        }
     }
 }
