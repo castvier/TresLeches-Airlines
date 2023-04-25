@@ -15,7 +15,6 @@ public class DatabaseManager {
     //JJAS
     private static final String DB_URL = "jdbc:sqlite:tresLechesAirlines.db";
 
-    //jimwell
 
     public DatabaseManager() {
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
@@ -48,7 +47,24 @@ public class DatabaseManager {
         }
     }
 
-    // ... (Add the existing addFlight method here)
+    public void addFlight(Flight flight) {
+        String sql = "INSERT INTO flights (number, departure_time, arrival_time, origin, destination, airplane_id, price, capacity) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, flight.getNumber());
+            pstmt.setString(2, flight.getDepartureTime());
+            pstmt.setString(3, flight.getArrivalTime());
+            pstmt.setString(4, flight.getOrigin());
+            pstmt.setString(5, flight.getDestination());
+            pstmt.setInt(6, flight.getAirplane().getId());
+            pstmt.setDouble(7, flight.getTicketPrice());
+            pstmt.setInt(8, flight.getAirplane().getCapacity()); // Change this line
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
 
     public void removeFlight(String number) {
         String sql = "DELETE FROM flights WHERE number = ?";
