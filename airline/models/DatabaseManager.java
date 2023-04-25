@@ -117,7 +117,7 @@ public class DatabaseManager {
             System.err.println(e.getMessage());
         }
     }
-
+//test
     // Add the resultSetToFlight method to convert the result set to a Flight object
     private Flight resultSetToFlight(ResultSet rs) throws SQLException {
         // Implement the conversion logic
