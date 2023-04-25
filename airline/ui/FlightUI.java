@@ -9,6 +9,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import com.airline.models.DatabaseManager;
+
 ;
 ;
 import javafx.scene.control.Button;
@@ -28,12 +30,14 @@ public class FlightUI extends Application {
     private TextField dateField;
     private TextField destinationField;
     private Label searchResultLabel;
+    private DatabaseManager databaseManager;
 
     private BorderPane borderPane; // declare borderPane as an instance variable
 
     @Override
     public void start(Stage primaryStage) {
         // Initialize airport, flightManagement, and flight
+        databaseManager = new DatabaseManager();
         airport = new Airport("AirportName");
         flightManagement = new FlightManagement(airport);
         flight = new Flight("", "", "", "", "", new Airplane("", 0, 0, ""), 0.0, 0);
@@ -86,16 +90,22 @@ public class FlightUI extends Application {
     }
 
     // Handle add flight button event
+// Handle add flight button event
     public void handleAddFlightButton() {
         String flightNumber = flightNumberField.getText();
         String date = dateField.getText();
         String destination = destinationField.getText();
 
         // Create a new Flight object based on the input fields
-        Flight newFlight = new Flight(flightNumber, airport.getName(), destination, date, date, null, 0, 0);
+        // Make sure you have an appropriate Airplane object
+        Airplane airplane = new Airplane("Model", 150, 3000, "SerialNumber");
+        Flight newFlight = new Flight(flightNumber, airport.getName(), destination, date, date, airplane, 0, 0);
 
         // Add the flight using the flight management object
         flightManagement.addFlight(newFlight);
+
+        // Add the flight to the database using the databaseManager object
+        databaseManager.addFlight(newFlight);
 
         // Assign the newly created flight to the "flight" variable
         flight = newFlight;
