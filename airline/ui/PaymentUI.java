@@ -1,6 +1,5 @@
 package com.airline.ui;
 
-import com.airline.models.DatabaseManager;
 import com.airline.models.Payment;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -16,8 +15,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import com.airline.models.Reservation;
-
 
 public class PaymentUI extends Application {
     // Declare UI elements and Payment object
@@ -31,29 +28,16 @@ public class PaymentUI extends Application {
     private Label paymentLabel;
     private Button makePaymentButton;
 
-    private Button addReservationButton;
-    private Button deleteReservationButton;
-    private Button updateReservationButton;
-
-    private TextField reservationIdField;
-    private TextField reservationDetailsField;
-
-    private BorderPane borderPane;
+    private BorderPane borderPane; // declare borderPane as an instance variable
 
     @Override
     public void start(Stage primaryStage) {
         // Initialize UI layout elements
-        borderPane = new BorderPane();
+        BorderPane borderPane = new BorderPane();
         VBox vBox = new VBox();
         HBox hBox1 = new HBox();
         HBox hBox2 = new HBox();
         GridPane gridPane = new GridPane();
-
-        addReservationButton = new Button("Add Reservation");
-        deleteReservationButton = new Button("Delete Reservation");
-        updateReservationButton = new Button("Update Reservation");
-        reservationIdField = new TextField();
-        reservationDetailsField = new TextField();
 
         // Initialize and set UI labels
         Label headerLabel = new Label("Payment Console");
@@ -84,13 +68,8 @@ public class PaymentUI extends Application {
         // Set layout margins and alignment
         VBox.setMargin(hBox2, new Insets(10, 0, 10, 0));
         VBox.setMargin(gridPane, new Insets(10, 0, 10, 0));
-        vBox.getChildren().addAll(addReservationButton, deleteReservationButton, updateReservationButton);
-        vBox.getChildren().addAll(new Label("Reservation ID:"), reservationIdField, new Label("Reservation Details:"), reservationDetailsField);
         hBox1.setAlignment(Pos.CENTER);
         hBox2.setAlignment(Pos.CENTER);
-        addReservationButton.setOnAction(e -> handleAddReservationButton());
-        deleteReservationButton.setOnAction(e -> handleDeleteReservationButton());
-        updateReservationButton.setOnAction(e -> handleUpdateReservationButton());
 
         // Set button click event handler
         makePaymentButton.setOnAction(e -> handleMakePaymentButton());
@@ -102,67 +81,6 @@ public class PaymentUI extends Application {
         primaryStage.setTitle("Payment Console");
         primaryStage.show();
     }
-
-    private void handleAddReservationButton() {
-        // Get reservation details from the UI
-        String reservationDetails = reservationDetailsField.getText();
-
-        // Split the reservation details string into an array
-        String[] details = reservationDetails.split(",");
-
-        // Check if the details array has the correct number of arguments
-        if (details.length != 7) {
-            paymentLabel.setText("Invalid reservation details format.");
-            return;
-        }
-
-        // Create a Reservation object with the necessary details
-        Reservation newReservation = new Reservation(details[0], details[1], details[2], details[3], details[4], details[5], details[6]);
-
-        // Call the addReservation method in DatabaseManager
-        DatabaseManager dbManager = new DatabaseManager();
-        dbManager.addReservation(newReservation);
-        paymentLabel.setText("Reservation added successfully!");
-    }
-
-
-
-
-    // Handle click event for the "Delete Reservation" button
-    private void handleDeleteReservationButton() {
-        // Get reservation ID from the UI
-        int reservationId = Integer.parseInt(reservationIdField.getText());
-
-        // Call the deleteReservation method in DatabaseManager
-        DatabaseManager dbManager = new DatabaseManager();
-        dbManager.deleteReservation(reservationId);
-        paymentLabel.setText("Reservation deleted successfully!");
-    }
-
-    // Handle click event for the "Update Reservation" button
-    private void handleUpdateReservationButton() {
-        // Get reservation ID and updated details from the UI
-        int reservationId = Integer.parseInt(reservationIdField.getText());
-        String updatedReservationDetails = reservationDetailsField.getText();
-
-        // Split the updated reservation details string into an array
-        String[] details = updatedReservationDetails.split(",");
-
-        // Check if the details array has the correct number of arguments
-        if (details.length != 7) {
-            paymentLabel.setText("Invalid reservation details format.");
-            return;
-        }
-
-        // Create a Reservation object with the necessary details
-        Reservation updatedReservation = new Reservation(details[0], details[1], details[2], details[3], details[4], details[5], details[6]);
-
-        // Call the updateReservation method in DatabaseManager
-        DatabaseManager dbManager = new DatabaseManager();
-        dbManager.updateReservation(reservationId, updatedReservation);
-        paymentLabel.setText("Reservation updated successfully!");
-    }
-
 
     // Handle click event for the "Make Payment" button
     public void handleMakePaymentButton() {
@@ -179,10 +97,6 @@ public class PaymentUI extends Application {
         // Call the payment method and pass the paymentLabel to display the result
         payment.payment(paymentLabel);
 
-        // Add the payment to the database
-        DatabaseManager dbManager = new DatabaseManager();
-        dbManager.addPayment(payment);
-
         // Set the paymentLabel text to indicate successful payment
         paymentLabel.setText("Payment successful!");
     }
@@ -191,7 +105,4 @@ public class PaymentUI extends Application {
         return borderPane; // Return the instance variable borderPane as the root of the UI
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 }

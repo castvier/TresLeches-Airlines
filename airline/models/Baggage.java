@@ -27,15 +27,6 @@ public class Baggage {
         this.size = "";
     }
 
-    public String getWeight() {
-        return weight;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-
     // View baggage details
     public String viewBaggage() {
         if (this.weight.isEmpty() && this.size.isEmpty()) {
@@ -44,6 +35,4 @@ public class Baggage {
             return "Baggage Weight: " + this.weight + "kg, Baggage Size: " + this.size + "cm";
         }
     }
-
-
 }
