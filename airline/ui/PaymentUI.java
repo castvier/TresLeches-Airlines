@@ -76,6 +76,7 @@ public class PaymentUI extends Application {
 
         // Set up and show the main application window
         Scene scene = new Scene(borderPane, 1100, 200);
+        scene.getStylesheets().add(getClass().getResource("paymentUIStyles.css").toExternalForm());
         borderPane.setCenter(vBox);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Payment Console");

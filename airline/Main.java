@@ -10,14 +10,14 @@ public class Main extends Application {
     // The main method of the program that launches the application.
     public static void main(String[] args) {
         // Launch the individual user interface.
-//        Application.launch(ReservationUI.class, args);
+        Application.launch(ReservationUI.class, args);
 //        Application.launch(PassengerUI.class, args);
 //        Application.launch(PaymentUI.class, args);
 //        Application.launch(AirplaneUI.class, args);
 //        Application.launch(AirportUI.class, args);
 //        Application.launch(BaggageUI.class, args);
 //        Application.launch(FlightManagementUI.class, args);
-        Application.launch(FlightUI.class, args);
+//        Application.launch(FlightUI.class, args);
 //        Application.launch(ManagerUI.class, args);
     }
 
