@@ -17,8 +17,8 @@ public class Main extends Application {
 //        Application.launch(AirportUI.class, args);
 //        Application.launch(BaggageUI.class, args);
 //        Application.launch(FlightManagementUI.class, args);
-        Application.launch(FlightUI.class, args);
-//        Application.launch(ManagerUI.class, args);
+//        Application.launch(FlightUI.class, args);
+        Application.launch(ManagerUI.class, args);
     }
 
     // The starting point of the application.

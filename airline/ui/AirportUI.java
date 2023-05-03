@@ -29,16 +29,18 @@ public class AirportUI extends Application {
     private Button addDepartingFlightButton;
     private Button addArrivingFlightButton;
 
-    private BorderPane borderPane; // Declare borderPane as an instance variable
+    private BorderPane borderPane;
 
     @Override
     public void start(Stage primaryStage) {
-        airport = new Airport("");
-        BorderPane borderPane = new BorderPane();
+        // Initialize layout containers
+        borderPane = new BorderPane();
         VBox vBox = new VBox();
         HBox hBox1 = new HBox();
         HBox hBox2 = new HBox();
         GridPane gridPane = new GridPane();
+
+        // Initialize UI controls
         Label headerLabel = new Label("Airport Console");
         Label airportNameLabel = new Label("Airport Name:");
         airportNameField = new TextField();
@@ -46,7 +48,7 @@ public class AirportUI extends Application {
         addDepartingFlightButton = new Button("Add Departing Flight");
         addArrivingFlightButton = new Button("Add Arriving Flight");
 
-        // Add UI elements to layout containers
+        // Add UI controls to layout containers
         hBox1.getChildren().add(headerLabel);
         hBox2.getChildren().addAll(airportNameLabel, airportNameField, addDepartingFlightButton, addArrivingFlightButton);
         vBox.getChildren().addAll(hBox1, hBox2, gridPane, flightListView);
@@ -63,6 +65,7 @@ public class AirportUI extends Application {
 
         // Set up the scene and show the primary stage
         Scene scene = new Scene(borderPane, 600, 450);
+        scene.getStylesheets().add(getClass().getResource("airportUIStyles.css").toExternalForm());
         borderPane.setCenter(vBox);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Airport Console");

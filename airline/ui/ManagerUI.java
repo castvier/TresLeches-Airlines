@@ -79,6 +79,7 @@ public class ManagerUI extends Application {
 
         // Set up the scene and show the stage
         Scene scene = new Scene(borderPane, 450, 300);
+        scene.getStylesheets().add(getClass().getResource("managerUIStyles.css").toExternalForm());
         borderPane.setCenter(vBox);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Manager Console");
