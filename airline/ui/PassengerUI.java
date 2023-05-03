@@ -1,4 +1,6 @@
 package com.airline.ui;
+import javafx.scene.Parent;
+
 
 import com.airline.models.Airplane;
 import com.airline.models.Flight;
@@ -41,6 +43,7 @@ public class PassengerUI extends Application {
 
         // Set up the scene
         Scene scene = new Scene(vBox, 350, 200);
+        scene.getStylesheets().add(getClass().getResource("passengerUIStyles.css").toExternalForm());
 
         // Initialize and set UI labels
         Label headerLabel = new Label("Passenger Console");

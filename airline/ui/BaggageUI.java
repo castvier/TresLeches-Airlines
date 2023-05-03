@@ -64,6 +64,7 @@ public class BaggageUI extends Application {
         modifyButton.setOnAction(e -> handleModifyButton());
         removeButton.setOnAction(e -> handleRemoveButton());
         Scene scene = new Scene(borderPane, 600, 450);
+        scene.getStylesheets().add(getClass().getResource("baggageUIStyles.css").toExternalForm());
         borderPane.setCenter(vBox);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Baggage Console");
