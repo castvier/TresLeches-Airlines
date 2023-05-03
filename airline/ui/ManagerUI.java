@@ -84,6 +84,11 @@ public class ManagerUI extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Manager Console");
         primaryStage.show();
+
+        MainUI mainUI = new MainUI();
+        Button backButton = mainUI.createBackButton(primaryStage);
+        borderPane.setBottom(backButton); // Add backButton to the bottom of the borderPane
+
     }
 
     public void handleAddButton() {

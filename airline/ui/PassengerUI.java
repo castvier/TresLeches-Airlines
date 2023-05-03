@@ -86,6 +86,12 @@ public class PassengerUI extends Application {
 
         // Add layout containers to the main container and display the application window
         vBox.getChildren().addAll(hBox1, gridPane);
+
+// Add the back button to the UI
+        MainUI mainUI = new MainUI();
+        Button backButton = mainUI.createBackButton(primaryStage);
+        vBox.getChildren().add(backButton); // Add the backButton to the vBox
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("Passenger Console");
         primaryStage.show();

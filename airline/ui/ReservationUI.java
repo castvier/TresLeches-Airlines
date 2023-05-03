@@ -86,6 +86,10 @@ public class ReservationUI extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Reservation Console");
         primaryStage.show();
+
+        MainUI mainUI = new MainUI();
+        Button backButton = mainUI.createBackButton(primaryStage);
+        vBox.getChildren().add(backButton); // Add the backButton to the vBox
     }
     public void handleCreateReservationButton() {
         // Get text from the input fields

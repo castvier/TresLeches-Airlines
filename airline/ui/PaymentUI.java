@@ -81,6 +81,10 @@ public class PaymentUI extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Payment Console");
         primaryStage.show();
+
+        MainUI mainUI = new MainUI();
+        Button backButton = mainUI.createBackButton(primaryStage);
+        vBox.getChildren().add(backButton); // Add the backButton to the vBox
     }
 
     // Handle click event for the "Make Payment" button

@@ -69,6 +69,10 @@ public class AirplaneUI extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Airplane Console");
         primaryStage.show();
+
+        MainUI mainUI = new MainUI();
+        Button backButton = mainUI.createBackButton(primaryStage);
+        vBox.getChildren().add(backButton); // Add the backButton to the vBox
     }
     private boolean isInteger(String input) {
         try {

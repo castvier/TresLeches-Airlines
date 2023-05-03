@@ -72,10 +72,16 @@ public class FlightManagementUI extends Application {
         updateButton.setOnAction(e -> handleUpdateButton());
 
         Scene scene = new Scene(borderPane, 800, 450);
+        scene.getStylesheets().add(getClass().getResource("flightManagementUIStyles.css").toExternalForm());
         borderPane.setCenter(vBox);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Flight Management Console");
         primaryStage.show();
+
+        MainUI mainUI = new MainUI();
+        Button backButton = mainUI.createBackButton(primaryStage);
+        vBox.getChildren().add(backButton); // Add the backButton to the vBox
+
     }
 
     // Handle add button event

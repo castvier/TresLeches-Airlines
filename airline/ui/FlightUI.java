@@ -85,6 +85,10 @@ public class FlightUI extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Flight Console");
         primaryStage.show();
+
+        MainUI mainUI = new MainUI();
+        Button backButton = mainUI.createBackButton(primaryStage);
+        vBox.getChildren().add(backButton); // Add the backButton to the vBox
     }
 
     // Handle add flight button event
