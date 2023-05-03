@@ -10,9 +10,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import com.airline.models.DatabaseManager;
-
-;
-;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -83,6 +80,7 @@ public class FlightUI extends Application {
 
         // Set up the scene and stage
         Scene scene = new Scene(borderPane, 600, 450);
+        scene.getStylesheets().add(getClass().getResource("flightUIStyles.css").toExternalForm());
         borderPane.setCenter(vBox);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Flight Console");
