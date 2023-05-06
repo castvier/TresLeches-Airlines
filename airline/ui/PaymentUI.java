@@ -1,4 +1,8 @@
 package com.airline.ui;
+import com.airline.models.Reservation;
+import com.airline.ui.ReservationUI;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import com.airline.models.Payment;
 import javafx.application.Application;
@@ -18,6 +22,12 @@ import javafx.stage.Stage;
 
 public class PaymentUI extends Application {
     // Declare UI elements and Payment object
+    private Reservation reservation;
+
+    public PaymentUI(Reservation reservation) {
+        this.reservation = reservation;
+    }
+
     private Payment payment;
     private TextField paymentProcessorField;
     private ComboBox<String> paymentMethodBox;
@@ -30,7 +40,6 @@ public class PaymentUI extends Application {
 
     private BorderPane borderPane; // declare borderPane as an instance variable
 
-    //test test
 
     @Override
     public void start(Stage primaryStage) {
@@ -85,8 +94,19 @@ public class PaymentUI extends Application {
         primaryStage.show();
 
         MainUI mainUI = new MainUI();
-        Button backButton = mainUI.createBackButton(primaryStage);
+//        Button backButton = mainUI.createBackButton(primaryStage);
+        Button backButton = new Button("Back");
+        backButton.setOnAction(e -> {
+            try {
+                new ReservationUI().start(primaryStage);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+
+
         vBox.getChildren().add(backButton); // Add the backButton to the vBox
+
     }
 
     // Handle click event for the "Make Payment" button
@@ -98,6 +118,7 @@ public class PaymentUI extends Application {
         String cardHolderName = cardHolderNameField.getText();
         String cardExpiry = cardExpiryField.getText();
         String cardCVC = cardCVCField.getText();
+
         // Create a new Payment object using the input values
         payment = new Payment(paymentProcessor, paymentMethod, cardNumber, cardHolderName, cardExpiry, cardCVC);
 
@@ -106,7 +127,23 @@ public class PaymentUI extends Application {
 
         // Set the paymentLabel text to indicate successful payment
         paymentLabel.setText("Payment successful!");
+
+        // Show the confirmation alert with reservation information and payment success
+        Alert confirmationAlert = new Alert(AlertType.INFORMATION);
+        confirmationAlert.setTitle("Payment Confirmation");
+        confirmationAlert.setHeaderText("Payment Successful!");
+        confirmationAlert.setContentText("Reservation Information:\n" +
+                "Passenger Name: " + reservation.getPassengerName() + "\n" +
+                "Passenger Email: " + reservation.getPassengerEmail() + "\n" +
+                "Flight Number: " + reservation.getFlightNumber() + "\n" +
+                "Departure Airport: " + reservation.getDepartureAirport() + "\n" +
+                "Arrival Airport: " + reservation.getArrivalAirport() + "\n" +
+                "Departure Date: " + reservation.getDepartureDate() + "\n" +
+                "Departure Time: " + reservation.getDepartureTime());
+
+        confirmationAlert.showAndWait();
     }
+
 
     public Parent getRoot3() {
         return borderPane; // Return the instance variable borderPane as the root of the UI

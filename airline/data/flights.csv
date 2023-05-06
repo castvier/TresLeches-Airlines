@@ -1,0 +1,6 @@
+Flight Number,Departure Airport,Arrival Airport,Departure Date,Departure Time,Seat Availability
+ABC123,ORD,LAX,2023-06-01,10:30,20
+DEF456,SFO,JFK,2023-06-02,15:45,12
+GHI789,ATL,LAS,2023-06-03,08:00,2
+JKL012,LGA,DEN,2023-06-04,12:15,7
+MNO345,DCA,MIA,2023-06-05,09:00,15
