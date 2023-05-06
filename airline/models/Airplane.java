@@ -14,6 +14,13 @@ public class Airplane {
         this.serialNumber = serialNumber;
     }
 
+    public Airplane(String model, int capacity) {
+        this.model = model;
+        this.capacity = capacity;
+        this.range = 0;
+        this.serialNumber = "";
+    }
+
 
 
     //get model
