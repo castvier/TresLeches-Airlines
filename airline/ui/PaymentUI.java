@@ -30,6 +30,8 @@ public class PaymentUI extends Application {
 
     private BorderPane borderPane; // declare borderPane as an instance variable
 
+    //test test
+
     @Override
     public void start(Stage primaryStage) {
         // Initialize UI layout elements
