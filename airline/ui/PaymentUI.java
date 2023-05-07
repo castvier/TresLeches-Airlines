@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 public class PaymentUI extends Application {
     // Declare UI elements and Payment object
     private Reservation reservation;
+    private Stage primaryStage;
 
     public PaymentUI(Reservation reservation) {
 
@@ -31,7 +32,6 @@ public class PaymentUI extends Application {
 
     }
     BorderPane rootLayout = new BorderPane(); // Initialize the root layout container
-
 
 
     private Payment payment;
@@ -46,6 +46,7 @@ public class PaymentUI extends Application {
     private Button makePaymentButton;
 
     private BorderPane borderPane; // declare borderPane as an instance variable
+
 
 
     @Override
@@ -100,8 +101,11 @@ public class PaymentUI extends Application {
         primaryStage.setTitle("Payment Console");
         primaryStage.show();
 
+//        PaymentUI paymentUI = new PaymentUI(reservation);
+//        paymentUI.show();
+//        paymentUI.waitUntilClosed();
+
         MainUI mainUI = new MainUI();
-//        Button backButton = mainUI.createBackButton(primaryStage);
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> {
             try {
@@ -110,11 +114,19 @@ public class PaymentUI extends Application {
                 exception.printStackTrace();
             }
         });
-
-
         vBox.getChildren().add(backButton); // Add the backButton to the vBox
-
     }
+
+    public void waitUntilClosed() {
+        while (primaryStage.isShowing()) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     // Handle click event for the "Make Payment" button
     public void handleMakePaymentButton() {

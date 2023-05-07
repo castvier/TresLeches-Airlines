@@ -14,8 +14,10 @@ public class Flight {
     private int availableSeats;
     private String arrivalDate;
     private int duration;
-    // Constructor
-    public Flight(String flightNumber, String originAirport, String destinationAirport, String departureDate, String departureTime, String arrivalDate, double ticketPrice, int availableSeats, int duration, Airplane airplane) {
+
+    private FlightStatus flightStatus; // Changed the type from String to FlightStatus
+
+    public Flight(String flightNumber, String originAirport, String destinationAirport, String departureDate, String departureTime, String arrivalDate, double ticketPrice, int availableSeats, int duration, Airplane airplane, FlightStatus flightStatus) {
         this.flightNumber = flightNumber;
         this.originAirport = originAirport;
         this.destinationAirport = destinationAirport;
@@ -26,8 +28,22 @@ public class Flight {
         this.availableSeats = availableSeats;
         this.duration = duration;
         this.airplane = airplane;
+        this.flightStatus = flightStatus; // This should work now
     }
 
+
+
+
+
+
+
+    public FlightStatus getFlightStatus() {
+        return flightStatus;
+    }
+
+    public void setFlightStatus(FlightStatus flightStatus) {
+        this.flightStatus = flightStatus;
+    }
 
 
     // Add a getter for duration

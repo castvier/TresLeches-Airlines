@@ -3,6 +3,7 @@ package com.airline.management;
 import com.airline.models.Airport;
 import com.airline.models.Flight;
 import com.airline.models.Airplane;
+import com.airline.models.FlightStatus;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,7 +15,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-
 
 public class FlightManagement {
     private List<Flight> flights;
@@ -28,9 +28,11 @@ public class FlightManagement {
         this.flights = new ArrayList<>();
         this.airport = airport;
 
+        // Create an arbitrary Airplane object
         Airplane airplane = new Airplane("Boeing 737", 150);
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            // Skip the first line (header row)
             String line = reader.readLine();
             while ((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
@@ -45,21 +47,9 @@ public class FlightManagement {
                     ticketPrice = Double.parseDouble(values[6]);
                 }
                 int defaultDuration = 0;
+                // Include the airplane object as the last parameter
+                Flight flight = new Flight(flightNumber, originAirport, destinationAirport, departureDate, departureTime, null, ticketPrice, availableSeats, defaultDuration, airplane, FlightStatus.ONTIME);
 
-                DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
-                DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_LOCAL_TIME;
-
-                LocalDate depDate = LocalDate.parse(departureDate, dateFormatter);
-                LocalTime depTime = LocalTime.parse(departureTime, timeFormatter);
-
-                LocalDateTime depDateTime = LocalDateTime.of(depDate, depTime);
-                // Assuming an arbitrary duration for calculating the arrival date
-                int arbitraryDuration = 4;
-                LocalDateTime arrDateTime = depDateTime.plusHours(arbitraryDuration);
-
-                String arrivalDate = arrDateTime.format(dateFormatter);
-
-                Flight flight = new Flight(flightNumber, originAirport, destinationAirport, departureDate, departureTime, arrivalDate, ticketPrice, availableSeats, defaultDuration, airplane);
                 addFlight(flight);
             }
         } catch (IOException e) {
@@ -67,8 +57,6 @@ public class FlightManagement {
         }
         generateArbitraryFlights();
     }
-
-
 
     public Flight getFlightByNumber(String flightNumber) {
         for (Flight flight : flights) {
@@ -78,7 +66,6 @@ public class FlightManagement {
         }
         return null;
     }
-
 
     public void generateArbitraryFlights() {
         String[] destinations = {"New York", "Los Angeles", "Chicago", "Houston", "Phoenix"};
@@ -111,7 +98,8 @@ public class FlightManagement {
             String arrivalDate = arrDateTime.format(dateFormatter);
 
             // Include the airplane object as the last parameter
-            Flight flight = new Flight(flightNumber, originAirport, destinationAirport, departureDate, departureTime, arrivalDate, ticketPrice, availableSeats, duration, airplane);
+            Flight flight = new Flight(flightNumber, originAirport, destinationAirport, departureDate, departureTime, arrivalDate, ticketPrice, availableSeats, duration, airplane, FlightStatus.ONTIME);
+
             addFlight(flight);
         }
     }

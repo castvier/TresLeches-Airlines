@@ -3,7 +3,7 @@ package com.airline.ui;
 import com.airline.models.Manager;
 import com.airline.models.Flight; // Add this import statement
 import com.airline.models.Airplane; // Add this import statement if not already imported
-
+import com.airline.models.FlightStatus;
 import com.airline.models.Manager;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -22,6 +22,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -111,20 +114,31 @@ public class ManagerUI extends Application {
         int duration = 4; // Provide an appropriate duration (in hours) for the flight
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_LOCAL_TIME;
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a");
 
         LocalDate depDate = LocalDate.parse(departureDate, dateFormatter);
         LocalTime depTime = LocalTime.parse(departureTime, timeFormatter);
+        LocalTime arrTime = LocalTime.parse(arrivalTime, timeFormatter);
 
         LocalDateTime depDateTime = LocalDateTime.of(depDate, depTime);
-        LocalDateTime arrDateTime = depDateTime.plusHours(duration);
+        LocalDateTime arrDateTime = LocalDateTime.of(depDate, arrTime); // Use the same date as departure date
 
         String arrivalDate = arrDateTime.format(dateFormatter);
 
         // Create a Flight object and add it to the manager
-        Flight flight = new Flight(flightNumber, flightCode, departureDate, departureTime, arrivalDate, arrivalTime, price, capacity, duration, airplane);
+        Flight flight = new Flight(flightNumber, flightCode, departureDate, departureTime, arrivalDate, arrivalTime, price, capacity, duration, airplane, FlightStatus.ONTIME);
+
         manager.addFlight(flight);
+
+        // Show an alert to indicate that the flight has been added
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Flight Added");
+        alert.setHeaderText("Flight " + flightNumber + " has been added to the system.");
+        alert.setContentText("Departure Time: " + departureTime + "\nArrival Time: " + arrivalTime);
+        alert.showAndWait();
     }
+
+
 
 
 

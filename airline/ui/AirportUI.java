@@ -4,6 +4,7 @@ import com.airline.models.Airport;
 import com.airline.models.Airplane; // Add this import statement
 import com.airline.models.Flight; // Add this import statement if not already imported
 
+import com.airline.models.FlightStatus;
 
 import com.airline.models.Airport;
 
@@ -89,7 +90,8 @@ public class AirportUI extends Application {
         int availableSeats = 100;
         int duration = 3; // Add duration
 
-        Flight flight = new Flight(flightNumber, airport.getName(), destinationAirport, departureDate, departureTime, arrivalDate, ticketPrice, availableSeats, duration, airplane);
+        Flight flight = new Flight(flightNumber, airport.getName(), destinationAirport, departureDate, departureTime, arrivalDate, ticketPrice, availableSeats, duration, airplane, FlightStatus.ONTIME);
+
 
         airport.addDepartingFlight(flight);
         flightListView.getItems().add("Departing Flight: " + flight.getDetails());
@@ -111,7 +113,7 @@ public class AirportUI extends Application {
 
         Airplane airplane = new Airplane("Boeing 737", 180, 30, "SomeString");
 
-        Flight flight = new Flight(flightNumber, originAirportName, airport.getName(), departureDate, departureTime, arrivalDate, ticketPrice, availableSeats, duration, airplane);
+        Flight flight = new Flight(flightNumber, originAirportName, airport.getName(), departureDate, departureTime, arrivalDate, ticketPrice, availableSeats, duration, airplane, FlightStatus.ONTIME);
 
         airport.addArrivingFlight(flight);
         flightListView.getItems().add("Arriving Flight: " + flight.getDetails());

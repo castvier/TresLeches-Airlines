@@ -21,8 +21,9 @@ public class MainUI extends Application {
         VBox root = new VBox(10);
         root.setPadding(new Insets(20));
 
-        Flight dummyFlight = new Flight("Dummy Flight", "Dummy Origin", "Dummy Destination", "01/01/2023", "00:00", "00:00", 100.0, 100, 100, new Airplane("", 0, 0, ""));
+        Flight dummyFlight = new Flight("Dummy Flight", "Dummy Origin", "Dummy Destination", "01/01/2023", "00:00", "00:00", 100.0, 100, 100, new Airplane("", 0, 0, ""), FlightStatus.ONTIME);
         Passenger passenger = new Passenger("Dummy Passenger", "dummy@gmail.com", "1234567890");
+
 
         // Fix: Use empty strings for the additional parameters of the Reservation constructor
         Reservation dummyReservation = new Reservation(dummyFlight.getFlightNumber(), dummyFlight.getOrigin(), dummyFlight.getDestination(), dummyFlight.getDateAsString(), dummyFlight.getDepartureTime(), dummyFlight.getArrivalTime(), passenger.getName());

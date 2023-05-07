@@ -4,12 +4,16 @@ import javafx.scene.control.ListView;
 import java.util.ArrayList;
 import com.airline.models.Reservation;
 
+import com.airline.models.FlightStatus;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 
 import java.util.Optional;
+import com.airline.ui.PaymentUI;
+import com.airline.models.Reservation;
 
 import com.airline.models.Airplane;
 import com.airline.models.Flight;
@@ -32,6 +36,8 @@ import javafx.stage.Stage;
 
 public class FlightUI extends Application {
     private FlightManagement flightManagement;
+    private Stage primaryStage; // declare primaryStage as an instance variable
+
     private Airport airport;
     private Flight flight; // declare the flight variable
     private TextField flightNumberField;
@@ -48,10 +54,12 @@ public class FlightUI extends Application {
     @Override
     public void start(Stage primaryStage) {
         // Initialize airport, flightManagement, and flight
+        this.primaryStage = primaryStage; // initialize the primaryStage instance variable
+
         databaseManager = new DatabaseManager();
         airport = new Airport("AirportName");
         flightManagement = new FlightManagement(airport);
-        flight = new Flight("", airport.getName(), "", "", "", "", 0.0, 0, 0, new Airplane("Model", 150, 3000, "SerialNumber"));
+        flight = new Flight("", airport.getName(), "", "", "", "", 0.0, 0, 0, new Airplane("Model", 150, 3000, "SerialNumber"), FlightStatus.ONTIME);
 
         timeLabel = new Label("Time:");
         timeField = new TextField();
@@ -157,17 +165,19 @@ public class FlightUI extends Application {
                     // Create a Reservation object from the selected flight and passenger information
                     Reservation reservation = new Reservation(passengerName, passengerEmail, selectedFlight.getFlightNumber(), selectedFlight.getOrigin(), selectedFlight.getDestination(), selectedFlight.getDepartureDate(), selectedFlight.getDepartureTime());
 
-                    PaymentUI paymentUI = new PaymentUI(reservation); // Pass the reservation to the PaymentUI
-                    Scene paymentScene = paymentUI.getScene(); // Assuming you have a getScene() method in PaymentUI class
+                    // Create a PaymentUI instance and pass the reservation to its constructor
+                    PaymentUI paymentUI = new PaymentUI(reservation);
 
-                    Stage paymentStage = new Stage();
-                    paymentStage.setScene(paymentScene);
-                    paymentStage.setTitle("Payment");
-                    paymentStage.show();
+                    // Set the PaymentUI scene as the primary stage scene
+                    Scene paymentScene = paymentUI.getScene();
+                    primaryStage.setScene(paymentScene);
 
-                    popupStage.close(); // Close the Flight Information popup
+
+                    // Close the Flight Information popup
+                    popupStage.close();
                 }
             });
+
 
 
 
@@ -204,7 +214,8 @@ public class FlightUI extends Application {
         // Create a new Flight object based on the input fields
         // Make sure you have an appropriate Airplane object
         Airplane airplane = new Airplane("Model", 150, 3000, "SerialNumber");
-        Flight newFlight = new Flight(flightNumber, airport.getName(), destination, date, departureTime, arrivalDate, 0.0, 0, 0, airplane);
+        Flight newFlight = new Flight(flightNumber, airport.getName(), destination, date, departureTime, arrivalDate, 0.0, 0, 0, airplane, FlightStatus.ONTIME);
+
 
         // Add the flight using the flight management object
         flightManagement.addFlight(newFlight);

@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import com.airline.models.Airplane;
 import com.airline.models.Flight;
 import com.airline.models.Passenger;
+import com.airline.models.FlightStatus;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,6 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 /**
  * PassengerUI
  */
@@ -115,7 +117,7 @@ public class PassengerUI extends Application {
         String arrivalDate = "2023-06-01"; // Add arrival date
         String arrivalTime = "13:00";
         int duration = 3; // Add duration
-        Flight flight = new Flight(flightNumber, "Origin Airport", "Destination Airport", departureDate, departureTime, arrivalDate, 500.0, 200, duration, airplane);
+        Flight flight = new Flight(flightNumber, "Origin Airport", "Destination Airport", departureDate, departureTime, arrivalDate, 500.0, 200, duration, airplane, FlightStatus.ONTIME);
 
         // Uncomment the following lines to create a reservation and add it to the ReservationManager
         // Reservation reservation = new Reservation(seat, passenger, flight);
