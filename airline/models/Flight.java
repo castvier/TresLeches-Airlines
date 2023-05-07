@@ -3,10 +3,10 @@ package com.airline.models;
 
 public class Flight {
 
-    // Declare fields to store flight data
     private String flightNumber;
-    private final String origin;
-    private String destination;
+    private final String originAirport;
+    private String destinationAirport;
+    private String departureDate;
     private String departureTime;
     private String arrivalTime;
     private final Airplane airplane;
@@ -14,29 +14,31 @@ public class Flight {
     private int availableSeats;
 
     // Constructor
-    public Flight(String flightNumber, String origin, String destination, String departureTime, String arrivalTime, Airplane airplane, double ticketPrice, int availableSeats) {
+    public Flight(String flightNumber, String originAirport, String destinationAirport, String departureDate, String departureTime, Airplane airplane, double ticketPrice, int availableSeats) {
         this.flightNumber = flightNumber;
-        this.origin = origin;
-        this.destination = destination;
+        this.originAirport = originAirport;
+        this.destinationAirport = destinationAirport;
+        this.departureDate = departureDate;
         this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
         this.airplane = airplane;
         this.ticketPrice = ticketPrice;
-        this.availableSeats=availableSeats;
+        this.availableSeats = availableSeats;
     }
 
     // Update flight data
     public void updateFlight(String flightNumber, String destination, String date) {
         this.flightNumber = flightNumber;
-        this.destination = destination;
-        this.departureTime = date;
+        this.destinationAirport = destination;
+        this.departureDate = date;
     }
+
 
     // Format flight details as a string
     public String getDetails() {
         return String.format("Flight Number: %s, Origin: %s, Destination: %s, Departure: %s, Arrival: %s, Airplane: %s, Ticket Price: %.2f, Available Seats: %d",
-                flightNumber, origin, destination, departureTime, arrivalTime, airplane.getModel(), ticketPrice, availableSeats);
+                flightNumber, originAirport, destinationAirport, departureTime, arrivalTime, airplane.getModel(), ticketPrice, availableSeats);
     }
+
 
     // Get available seats
     public int getAvailableSeats() {
@@ -76,12 +78,17 @@ public class Flight {
 
     // Get origin airport
     public String getOriginAirport() {
-        return origin;
+        return originAirport;
     }
+
+    public String getDepartureDate() {
+        return departureDate;
+    }
+
 
     // Get destination airport
     public String getDestinationAirport() {
-        return destination;
+        return destinationAirport;
     }
 
     // Get flight number
@@ -91,12 +98,12 @@ public class Flight {
 
     // Get origin
     public String getOrigin() {
-        return origin;
+        return originAirport;
     }
 
     // Get destination
     public String getDestination() {
-        return destination;
+        return destinationAirport;
     }
 
     // Get departure time

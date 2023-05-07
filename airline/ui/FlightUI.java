@@ -1,4 +1,8 @@
 package com.airline.ui;
+import java.util.List;
+import javafx.scene.control.ListView;
+import java.util.ArrayList;
+
 
 import com.airline.models.Airplane;
 import com.airline.models.Flight;
@@ -28,6 +32,9 @@ public class FlightUI extends Application {
     private TextField destinationField;
     private Label searchResultLabel;
     private DatabaseManager databaseManager;
+    private ListView<String> flightListView;
+    private Label timeLabel;
+    private TextField timeField;
 
     private BorderPane borderPane; // declare borderPane as an instance variable
 
@@ -37,15 +44,19 @@ public class FlightUI extends Application {
         databaseManager = new DatabaseManager();
         airport = new Airport("AirportName");
         flightManagement = new FlightManagement(airport);
-        flight = new Flight("", "", "", "", "", new Airplane("", 0, 0, ""), 0.0, 0);
+        flight = new Flight("", airport.getName(), "", "", "", new Airplane("Model", 150, 3000, "SerialNumber"), 0.0, 0);
+
+        timeLabel = new Label("Time:");
+        timeField = new TextField();
+        flightListView = new ListView<>(); // Initialize flightListView before updating it
+        flightListView.setPrefHeight(200);
 
         // Initialize UI components and set up layout
-        BorderPane borderPane = new BorderPane();
+        borderPane = new BorderPane();
         VBox vBox = new VBox();
         HBox hBox1 = new HBox();
         HBox hBox2 = new HBox();
         HBox hBox3 = new HBox();
-        GridPane gridPane = new GridPane();
         Label headerLabel = new Label("Flight Console");
         Label flightNumberLabel = new Label("Flight Number:");
         Label dateLabel = new Label("Date:");
@@ -54,29 +65,28 @@ public class FlightUI extends Application {
         Button updateFlightButton = new Button("Update Flight");
         Button viewFlightButton = new Button("View Flight");
         Button deleteFlightButton = new Button("Delete Flight");
+        Button searchFlightButton = new Button("Search Flights");
         flightNumberField = new TextField();
         dateField = new TextField();
         destinationField = new TextField();
         searchResultLabel = new Label();
-        vBox.getChildren().addAll(hBox1, hBox2, hBox3, gridPane);
+
+        vBox.getChildren().addAll(hBox1, hBox2, hBox3, flightListView);
+
         hBox1.getChildren().add(headerLabel);
         hBox2.getChildren().addAll(flightNumberLabel, flightNumberField, dateLabel, dateField,
-                destinationLabel, destinationField, addFlightButton);
+                timeLabel, timeField, destinationLabel, destinationField, addFlightButton);
         hBox3.getChildren().addAll(updateFlightButton, viewFlightButton, deleteFlightButton);
-        gridPane.add(searchResultLabel, 0, 0);
+        hBox3.getChildren().add(searchFlightButton);
         VBox.setMargin(hBox2, new Insets(10, 0, 10, 0));
         VBox.setMargin(hBox3, new Insets(10, 0, 10, 0));
-        VBox.setMargin(gridPane, new Insets(10, 0, 10, 0));
-        gridPane.setAlignment(Pos.CENTER);
-        hBox1.setAlignment(Pos.CENTER);
-        hBox2.setAlignment(Pos.CENTER);
-        hBox3.setAlignment(Pos.CENTER);
 
         // Set up event handlers
         addFlightButton.setOnAction(e -> handleAddFlightButton());
         updateFlightButton.setOnAction(e -> handleUpdateFlightButton());
         viewFlightButton.setOnAction(e -> handleViewFlightButton());
         deleteFlightButton.setOnAction(e -> handleDeleteFlightButton());
+        searchFlightButton.setOnAction(e -> handleSearchFlightButton());
 
         // Set up the scene and stage
         Scene scene = new Scene(borderPane, 600, 450);
@@ -85,11 +95,18 @@ public class FlightUI extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Flight Console");
         primaryStage.show();
+        flightListView.setVisible(false);
+
+//        flightManagement.generateArbitraryFlights(); // Moved the generation of arbitrary flights after initializing the ListView
+        updateFlightListView(flightManagement.getFlights());
 
         MainUI mainUI = new MainUI();
         Button backButton = mainUI.createBackButton(primaryStage);
         vBox.getChildren().add(backButton); // Add the backButton to the vBox
     }
+
+
+
 
     // Handle add flight button event
 // Handle add flight button event
@@ -97,6 +114,8 @@ public class FlightUI extends Application {
         String flightNumber = flightNumberField.getText();
         String date = dateField.getText();
         String destination = destinationField.getText();
+        Label timeLabel = new Label("Time:");
+        TextField timeField = new TextField();
 
         // Create a new Flight object based on the input fields
         // Make sure you have an appropriate Airplane object
@@ -119,9 +138,50 @@ public class FlightUI extends Application {
         String date = dateField.getText();
         String destination = destinationField.getText();
         flightManagement.deleteFlight(flight);
-        flight = new Flight(flightNumber, airport.getName(), destination, date, date, null, 0, 0);
+
+//        // Re-assign the flight variable with an appropriate Airplane object
+//        Airplane airplane = new Airplane("Model", 150, 3000, "SerialNumber");
+//        flight = new Flight(flightNumber, airport.getName(), destination, date, date, airplane, 0, 0);
+
         searchResultLabel.setText("Flight deleted.");
     }
+
+
+    public void handleSearchFlightButton() {
+        String destinationAirport = destinationField.getText();
+        String departureDate = dateField.getText();
+        String departureTime = timeField.getText();
+
+        // Generate arbitrary flights only when the "Search Flights" button is clicked
+        flightManagement.generateArbitraryFlights();
+
+        List<Flight> matchingFlights = flightManagement.searchFlights(destinationAirport, departureDate, departureTime);
+
+        // Create a new list to hold all flights (arbitrary and matching)
+        List<Flight> allFlights = new ArrayList<>(flightManagement.getFlights());
+        allFlights.addAll(matchingFlights);
+
+        // Update the flightListView with all flights (arbitrary and matching)
+        flightListView.setVisible(true);
+        updateFlightListView(allFlights);
+    }
+
+
+
+
+    public void updateFlightListView(List<Flight> flights) {
+        flightListView.getItems().clear();
+        for (Flight flight : flights) {
+            String airplaneModel = "";
+            if (flight.getAirplane() != null) {
+                airplaneModel = flight.getAirplane().getModel();
+            }
+            flightListView.getItems().add(flight.getFlightNumber() + " | " + airplaneModel + " | " + flight.getDestination() + " | " + flight.getDepartureDate());
+        }
+    }
+
+
+
 
     // Handle update flight button event
     public void handleUpdateFlightButton() {

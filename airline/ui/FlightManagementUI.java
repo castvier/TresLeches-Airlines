@@ -4,6 +4,9 @@ import com.airline.models.Airport;
 import com.airline.management.FlightManagement;
 import com.airline.models.Airplane;
 import com.airline.models.Flight; // Add this import statement
+import java.util.List;
+import java.util.List;
+import java.util.ArrayList;
 
 
 import javafx.application.Application;
@@ -27,22 +30,30 @@ public class FlightManagementUI extends Application {
     private TextField destinationAirportField;
     private TextField departureTimeField;
     private TextField arrivalTimeField;
+
     private Button addButton;
     private Button deleteButton;
     private Button updateButton;
+    private List<Flight> flights;
 
-    private BorderPane borderPane; // declare borderPane as an instance variable
+    private TextField dateField;
+    private BorderPane borderPane;
+    private HBox inputFieldsHBox;
+
 
     @Override
     public void start(Stage primaryStage) {
         Airport airport = new Airport("Sample Airport");
         flightManagement = new FlightManagement(airport);
 
+        dateField = new TextField();
+        inputFieldsHBox = new HBox();
+        inputFieldsHBox.getChildren().addAll(new Label("Origin Airport:"), originAirportField, new Label("Destination Airport:"), destinationAirportField, new Label("Date:"), dateField, new Label("Departure Time:"), departureTimeField, new Label("Arrival Time:"), arrivalTimeField);
+
         BorderPane borderPane = new BorderPane();
-        VBox vBox = new VBox();
         HBox headerHBox = new HBox();
-        HBox inputFieldsHBox = new HBox();
         HBox buttonsHBox = new HBox();
+        VBox vBox = new VBox(headerHBox, inputFieldsHBox, buttonsHBox, flightListView);
 
         Label headerLabel = new Label("Flight Management Console");
         originAirportField = new TextField();
@@ -54,12 +65,14 @@ public class FlightManagementUI extends Application {
         addButton = new Button("Add Flight");
         deleteButton = new Button("Delete Flight");
         updateButton = new Button("Update Flight");
+        Button searchButton = new Button("Search Flights");
 
         headerHBox.getChildren().add(headerLabel);
-        inputFieldsHBox.getChildren().addAll(new Label("Origin Airport:"), originAirportField, new Label("Destination Airport:"), destinationAirportField, new Label("Departure Time:"), departureTimeField, new Label("Arrival Time:"), arrivalTimeField);
-        buttonsHBox.getChildren().addAll(addButton, deleteButton, updateButton);
+        buttonsHBox.getChildren().addAll(addButton, deleteButton, updateButton, searchButton);
+        searchButton.setOnAction(e -> handleSearchButton());
 
-        vBox.getChildren().addAll(headerHBox, inputFieldsHBox, buttonsHBox, flightListView);
+        borderPane.setCenter(new VBox(inputFieldsHBox, buttonsHBox, flightListView));
+
         VBox.setMargin(inputFieldsHBox, new Insets(10, 0, 10, 0));
         VBox.setMargin(buttonsHBox, new Insets(10, 0, 10, 0));
 
@@ -73,16 +86,29 @@ public class FlightManagementUI extends Application {
 
         Scene scene = new Scene(borderPane, 800, 450);
         scene.getStylesheets().add(getClass().getResource("flightManagementUIStyles.css").toExternalForm());
-        borderPane.setCenter(vBox);
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("Flight Management Console");
         primaryStage.show();
 
         MainUI mainUI = new MainUI();
         Button backButton = mainUI.createBackButton(primaryStage);
-        vBox.getChildren().add(backButton); // Add the backButton to the vBox
+        vBox.getChildren().add(backButton);
 
+        borderPane.setCenter(vBox);
     }
+
+
+//    // Add this method to your FlightManagement class
+//    public List<Flight> searchFlights(String departureTime, String destination) {
+//        List<Flight> matchingFlights = new ArrayList<>();
+//        for (Flight flight : flights) {
+//            if (flight.getDepartureTime().equals(departureTime) && flight.getDestination().equals(destination)) {
+//                matchingFlights.add(flight);
+//            }
+//        }
+//        return matchingFlights;
+//    }
 
     // Handle add button event
     private void handleAddButton() {
@@ -106,11 +132,36 @@ public class FlightManagementUI extends Application {
     private void handleDeleteButton() {
         int selectedIndex = flightListView.getSelectionModel().getSelectedIndex();
         if (selectedIndex != -1) {
-            Flight selectedFlight = flightManagement.getFlights().get(selectedIndex);
+            Flight selectedFlight = flights.get(selectedIndex);
             flightManagement.deleteFlight(selectedFlight);
             flightListView.getItems().remove(selectedIndex);
         }
     }
+
+    // Handle search button event
+    private void handleSearchButton() {
+        String destinationAirport = destinationAirportField.getText();
+        String departureTime = departureTimeField.getText();
+        String date = dateField.getText(); // Add this line to get the date input
+        List<Flight> matchingFlights = flightManagement.searchFlights(destinationAirport, date, departureTime); // Pass the date argument
+        flightListView.getItems().clear();
+        for (Flight flight : matchingFlights) {
+            flightListView.getItems().add(flight.getDetails());
+        }
+    }
+
+
+    public List<Flight> searchFlights(String destination, String date, String departureTime) {
+        List<Flight> matchingFlights = new ArrayList<>();
+        for (Flight flight : flights) {
+            if (flight.getDestination().equalsIgnoreCase(destination) && flight.getDepartureTime().startsWith(date) && flight.getDepartureTime().endsWith(departureTime)) {
+                matchingFlights.add(flight);
+            }
+        }
+        return matchingFlights;
+    }
+
+
 
     // Handle update button event
     private void handleUpdateButton() {
