@@ -12,18 +12,29 @@ public class Flight {
     private final Airplane airplane;
     private final double ticketPrice;
     private int availableSeats;
-
+    private String arrivalDate;
+    private int duration;
     // Constructor
-    public Flight(String flightNumber, String originAirport, String destinationAirport, String departureDate, String departureTime, Airplane airplane, double ticketPrice, int availableSeats) {
+    public Flight(String flightNumber, String originAirport, String destinationAirport, String departureDate, String departureTime, String arrivalDate, double ticketPrice, int availableSeats, int duration, Airplane airplane) {
         this.flightNumber = flightNumber;
         this.originAirport = originAirport;
         this.destinationAirport = destinationAirport;
         this.departureDate = departureDate;
         this.departureTime = departureTime;
-        this.airplane = airplane;
+        this.arrivalDate = arrivalDate;
         this.ticketPrice = ticketPrice;
         this.availableSeats = availableSeats;
+        this.duration = duration;
+        this.airplane = airplane;
     }
+
+
+
+    // Add a getter for duration
+    public int getDuration() {
+        return duration;
+    }
+
 
     // Update flight data
     public void updateFlight(String flightNumber, String destination, String date) {
@@ -31,13 +42,17 @@ public class Flight {
         this.destinationAirport = destination;
         this.departureDate = date;
     }
-
+    public String getArrivalDate() {
+        return arrivalDate;
+    }
 
     // Format flight details as a string
+    // Format flight details as a string
     public String getDetails() {
-        return String.format("Flight Number: %s, Origin: %s, Destination: %s, Departure: %s, Arrival: %s, Airplane: %s, Ticket Price: %.2f, Available Seats: %d",
-                flightNumber, originAirport, destinationAirport, departureTime, arrivalTime, airplane.getModel(), ticketPrice, availableSeats);
+        return String.format("Flight Number: %s, Origin: %s, Destination: %s, Departure Date: %s, Departure Time: %s, Arrival Date: %s, Arrival Time: %s, Airplane: %s, Ticket Price: %.2f, Available Seats: %d",
+                flightNumber, originAirport, destinationAirport, departureDate, departureTime, arrivalDate, arrivalTime, airplane.getModel(), ticketPrice, availableSeats);
     }
+
 
 
     // Get available seats

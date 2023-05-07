@@ -37,7 +37,7 @@ public class MainUI extends Application {
         Button airplaneButton = createButton("Airplane UI", primaryStage, new AirplaneUI());
         Button airportButton = createButton("Airport UI", primaryStage, new AirportUI());
         Button baggageButton = createButton("Baggage UI", primaryStage, new BaggageUI());
-        Button flightManagementButton = createButton("Flight Management UI", primaryStage, new FlightManagementUI());
+//        Button flightManagementButton = createButton("Flight Management UI", primaryStage, new FlightManagementUI());
         Button flightButton = createButton("Flight UI", primaryStage, new FlightUI());
         Button managerButton = createButton("Manager UI", primaryStage, new ManagerUI());
 //        Button reservationButton = createButton("Reservation UI", primaryStage, new ReservationUI());
@@ -54,7 +54,7 @@ public class MainUI extends Application {
         gridPane.add(airplaneButton, 1, 1);
         gridPane.add(airportButton, 0, 2);
         gridPane.add(baggageButton, 1, 2);
-        gridPane.add(flightManagementButton, 0, 3);
+//        gridPane.add(flightManagementButton, 0, 3);
         gridPane.add(flightButton, 1, 3);
         gridPane.add(managerButton, 0, 4);
 

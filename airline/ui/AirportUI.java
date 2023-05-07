@@ -78,38 +78,45 @@ public class AirportUI extends Application {
 
     // Handle addDepartingFlightButton action
     public void handleAddDepartingFlightButton() {
-        // Replace the following with your actual Flight class constructor and relevant parameters
         String flightNumber = "AB123";
         String destinationAirport = "DestinationAirport";
+        String departureDate = "2023-06-01"; // Add departure date
         String departureTime = "10:00";
+        String arrivalDate = "2023-06-01"; // Add arrival date
         String arrivalTime = "13:00";
-        Airplane airplane = new Airplane("Boeing 737", 180, 30, "SomeString"); // Replace with the actual values required by your Airplane constructor
+        Airplane airplane = new Airplane("Boeing 737", 180, 30, "SomeString");
         double ticketPrice = 100.0;
         int availableSeats = 100;
+        int duration = 3; // Add duration
 
-        Flight flight = new Flight(flightNumber, airport.getName(), departureTime, arrivalTime, flightNumber, airplane, ticketPrice, availableSeats);
+        Flight flight = new Flight(flightNumber, airport.getName(), destinationAirport, departureDate, departureTime, arrivalDate, ticketPrice, availableSeats, duration, airplane);
 
         airport.addDepartingFlight(flight);
         flightListView.getItems().add("Departing Flight: " + flight.getDetails());
     }
 
+
     // Handle addArrivingFlightButton action
 
     public void handleAddArrivingFlightButton() {
         String originAirportName = "OriginAirport";
+        String departureDate = "2023-06-01"; // Add departure date
         String departureTime = "12:00";
+        String arrivalDate = "2023-06-01"; // Add arrival date
         String arrivalTime = "15:00";
-        String flightNumber = "AA1234"; // Replace with a valid flight number
-        double distance = 1000.0; // Replace with the actual distance value
-        int availableSeats = 150; // Replace with the actual available seats value
+        String flightNumber = "AA1234";
+        double ticketPrice = 100.0;
+        int availableSeats = 150;
+        int duration = 3; // Add duration
 
-        Airplane airplane = new Airplane("Boeing 737", 180, 30, "SomeString"); // Replace with the actual values required by your Airplane constructor
+        Airplane airplane = new Airplane("Boeing 737", 180, 30, "SomeString");
 
-        Flight flight = new Flight(originAirportName, airport.getName(), departureTime, arrivalTime, flightNumber, airplane, distance, availableSeats);
+        Flight flight = new Flight(flightNumber, originAirportName, airport.getName(), departureDate, departureTime, arrivalDate, ticketPrice, availableSeats, duration, airplane);
 
         airport.addArrivingFlight(flight);
         flightListView.getItems().add("Arriving Flight: " + flight.getDetails());
     }
+
 
     public Parent getRoot8() {
         return borderPane; // Return the instance variable borderPane as the root of the UI

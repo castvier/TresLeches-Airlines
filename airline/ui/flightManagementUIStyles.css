@@ -1,22 +1,22 @@
-.root {
-    -fx-font-family: "Arial";
-}
+/*.root {*/
+/*    -fx-font-family: "Arial";*/
+/*}*/
 
-.label {
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-}
+/*.label {*/
+/*    -fx-font-size: 14px;*/
+/*    -fx-font-weight: bold;*/
+/*}*/
 
-.text-field {
-    -fx-pref-width: 100px;
-}
+/*.text-field {*/
+/*    -fx-pref-width: 100px;*/
+/*}*/
 
-.button {
-    -fx-background-color: #0076a3;
-    -fx-text-fill: white;
-    -fx-padding: 5px 15px;
-}
+/*.button {*/
+/*    -fx-background-color: #0076a3;*/
+/*    -fx-text-fill: white;*/
+/*    -fx-padding: 5px 15px;*/
+/*}*/
 
-.button:hover {
-    -fx-background-color: #0093c4;
-}
+/*.button:hover {*/
+/*    -fx-background-color: #0093c4;*/
+/*}*/

@@ -108,12 +108,20 @@ public class PassengerUI extends Application {
         passenger.setName(name);
         Seat seat= new Seat(seatNumber);
         Airplane airplane = new Airplane("Boeing 747", 366, 10000, "ABC123");
-        Flight flight = new Flight(flightNumber, "Origin Airport", "Destination Airport", "Departure Time", "Arrival Time", airplane, 500.0, 200);
+        String departureDate = "2023-06-01"; // Add departure date
+        String departureTime = "10:00";
+        String arrivalDate = "2023-06-01"; // Add arrival date
+        String arrivalTime = "13:00";
+        int duration = 3; // Add duration
+        Flight flight = new Flight(flightNumber, "Origin Airport", "Destination Airport", departureDate, departureTime, arrivalDate, 500.0, 200, duration, airplane);
 
         // Uncomment the following lines to create a reservation and add it to the ReservationManager
         // Reservation reservation = new Reservation(seat, passenger, flight);
         // ReservationManager.getInstance().addReservation(reservation);
     }
+
+
+
 
     // Handle click event for the "View Booking" button
     public void handleViewBookingButton() {

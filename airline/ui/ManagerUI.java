@@ -18,6 +18,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -103,12 +107,26 @@ public class ManagerUI extends Application {
 
         double price = 150.0;
         int capacity = 100;
-        String extraArg = "G1"; // Replace "G1" with the appropriate value for your use case.
+        String departureDate = "2023-06-01"; // Provide an appropriate departure date
+        int duration = 4; // Provide an appropriate duration (in hours) for the flight
+
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_LOCAL_TIME;
+
+        LocalDate depDate = LocalDate.parse(departureDate, dateFormatter);
+        LocalTime depTime = LocalTime.parse(departureTime, timeFormatter);
+
+        LocalDateTime depDateTime = LocalDateTime.of(depDate, depTime);
+        LocalDateTime arrDateTime = depDateTime.plusHours(duration);
+
+        String arrivalDate = arrDateTime.format(dateFormatter);
 
         // Create a Flight object and add it to the manager
-        Flight flight = new Flight(flightNumber, departureTime, arrivalTime, flightCode, extraArg, airplane, price, capacity);
+        Flight flight = new Flight(flightNumber, flightCode, departureDate, departureTime, arrivalDate, arrivalTime, price, capacity, duration, airplane);
         manager.addFlight(flight);
     }
+
+
 
     public void handleRemoveButton() {
         // Remove a flight from the manager based on the flight number

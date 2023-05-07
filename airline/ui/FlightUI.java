@@ -44,7 +44,7 @@ public class FlightUI extends Application {
         databaseManager = new DatabaseManager();
         airport = new Airport("AirportName");
         flightManagement = new FlightManagement(airport);
-        flight = new Flight("", airport.getName(), "", "", "", new Airplane("Model", 150, 3000, "SerialNumber"), 0.0, 0);
+        flight = new Flight("", airport.getName(), "", "", "", "", 0.0, 0, 0, new Airplane("Model", 150, 3000, "SerialNumber"));
 
         timeLabel = new Label("Time:");
         timeField = new TextField();
@@ -87,6 +87,8 @@ public class FlightUI extends Application {
         viewFlightButton.setOnAction(e -> handleViewFlightButton());
         deleteFlightButton.setOnAction(e -> handleDeleteFlightButton());
         searchFlightButton.setOnAction(e -> handleSearchFlightButton());
+        flightListView.setOnMouseClicked(e -> handleFlightListViewClick());
+
 
         // Set up the scene and stage
         Scene scene = new Scene(borderPane, 600, 450);
@@ -106,6 +108,32 @@ public class FlightUI extends Application {
     }
 
 
+    private void handleFlightListViewClick() {
+        Flight selectedFlight = flightManagement.getFlightByNumber(flightListView.getSelectionModel().getSelectedItem().split(" ")[0]);
+
+        if (selectedFlight != null) {
+            // Create a new Stage (window) for the popup
+            Stage popupStage = new Stage();
+            VBox vbox = new VBox();
+            vbox.setPadding(new Insets(10, 10, 10, 10));
+            vbox.setSpacing(10);
+
+            Label titleLabel = new Label("You selected this Flight:");
+            Label flightNumberLabel = new Label("Flight Number: " + selectedFlight.getFlightNumber());
+            Label originLabel = new Label("Origin: " + selectedFlight.getOrigin());
+            Label destinationLabel = new Label("Destination: " + selectedFlight.getDestination());
+            Label departureDateLabel = new Label("Departure Date: " + selectedFlight.getDepartureDate());
+            Label arrivalDateLabel = new Label("Arrival Date: " + selectedFlight.getArrivalDate());
+
+            vbox.getChildren().addAll(titleLabel, flightNumberLabel, originLabel, destinationLabel, departureDateLabel, arrivalDateLabel);
+
+            Scene popupScene = new Scene(vbox, 300, 200);
+            popupStage.setScene(popupScene);
+            popupStage.setTitle("Flight Information");
+            popupStage.show();
+        }
+    }
+
 
 
     // Handle add flight button event
@@ -114,13 +142,22 @@ public class FlightUI extends Application {
         String flightNumber = flightNumberField.getText();
         String date = dateField.getText();
         String destination = destinationField.getText();
+
+        // Create and add a time field for departure time
         Label timeLabel = new Label("Time:");
         TextField timeField = new TextField();
+        // Add the timeField to the scene or layout as needed
+
+        // Get the departure time from the timeField
+        String departureTime = timeField.getText();
+
+        // Set the arrival date value as needed, for now, it's initialized as an empty string
+        String arrivalDate = "";
 
         // Create a new Flight object based on the input fields
         // Make sure you have an appropriate Airplane object
         Airplane airplane = new Airplane("Model", 150, 3000, "SerialNumber");
-        Flight newFlight = new Flight(flightNumber, airport.getName(), destination, date, date, airplane, 0, 0);
+        Flight newFlight = new Flight(flightNumber, airport.getName(), destination, date, departureTime, arrivalDate, 0.0, 0, 0, airplane);
 
         // Add the flight using the flight management object
         flightManagement.addFlight(newFlight);
@@ -131,6 +168,7 @@ public class FlightUI extends Application {
         // Assign the newly created flight to the "flight" variable
         flight = newFlight;
     }
+
 
     // Handle delete flight button event
     public void handleDeleteFlightButton() {
