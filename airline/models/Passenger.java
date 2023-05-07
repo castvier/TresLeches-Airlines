@@ -1,42 +1,46 @@
 package com.airline.models;
 
-// Passenger class manages personal data along with their seat assignments.
 public class Passenger {
+    private String name;
+    private String email;
+    private String seatNumber;
+    private String phoneNumber;
 
-    private String name; // name of passenger
-    private final int age; // age final because can't be changed afterwards
-    private String email; // email address
-    private String phoneNumber; // phone number
-    private String seatNumber; // assigned seat number
-
-    public Passenger(String name, int age, String email, String phoneNumber) {
-        this.name = name; // setting passenger's name
-        this.age = age; // age
-        this.email = email; // email address
-        this.phoneNumber = phoneNumber; // Set the passenger's phone number
-    }
-
-    public void setName(String name) {
-        this.name = name; // Set a new name for the passenger
+    public Passenger(String name, String email, String seatNumber) {
+        this.name = name;
+        this.email = email;
+        this.seatNumber = seatNumber;
     }
 
     public String getName() {
-        return name; // Get the passenger's name
+        return name;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber; // Get the passenger's phone number
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
-        return email; // Get the passenger's email address
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSeatNumber() {
-        return seatNumber; // Get the passenger's assigned seat number
+        return seatNumber;
     }
 
     public void setSeatNumber(String seatNumber) {
-        this.seatNumber = seatNumber; // Set a new seat number for the passenger
+        this.seatNumber = seatNumber;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

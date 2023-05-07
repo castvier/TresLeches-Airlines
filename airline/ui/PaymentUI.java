@@ -25,10 +25,17 @@ public class PaymentUI extends Application {
     private Reservation reservation;
 
     public PaymentUI(Reservation reservation) {
+
         this.reservation = reservation;
+        paymentScene = new Scene(rootLayout, 600, 450);
+
     }
+    BorderPane rootLayout = new BorderPane(); // Initialize the root layout container
+
+
 
     private Payment payment;
+    private Scene paymentScene; // Declare a Scene instance variable at the class level
     private TextField paymentProcessorField;
     private ComboBox<String> paymentMethodBox;
     private TextField cardNumberField;
@@ -145,6 +152,9 @@ public class PaymentUI extends Application {
     }
 
 
+    public Scene getScene() {
+        return paymentScene;
+    }
     public Parent getRoot3() {
         return borderPane; // Return the instance variable borderPane as the root of the UI
     }

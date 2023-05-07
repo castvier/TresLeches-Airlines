@@ -5,6 +5,7 @@ import com.airline.models.Reservation;
 import javafx.scene.Parent;
 import java.util.List;
 import java.util.Map;
+import com.airline.models.Flight;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -252,11 +253,14 @@ public class ReservationUI extends Application {
         String departureDate = departureDateField.getText();
         String departureTime = departureTimeField.getText();
 
-        // Create a new reservation object with the input data
+        // Create a new Reservation object with the input data
         reservation = new Reservation(passengerName, passengerEmail, flightNumber, departureAirport, arrivalAirport, departureDate, departureTime);
 
         // Set the reservation label text to display the created reservation
         reservationLabel.setText("Reservation created: " + reservation.getPassengerName() + " - " + reservation.getFlightNumber());
+
+
+
 
         // Create an alert for displaying the selected flight information
         Alert flightInfoAlert = new Alert(AlertType.INFORMATION);
@@ -291,7 +295,6 @@ public class ReservationUI extends Application {
             }
         });
     }
-
 
 
 

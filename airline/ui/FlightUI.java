@@ -2,7 +2,14 @@ package com.airline.ui;
 import java.util.List;
 import javafx.scene.control.ListView;
 import java.util.ArrayList;
+import com.airline.models.Reservation;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
+
+import java.util.Optional;
 
 import com.airline.models.Airplane;
 import com.airline.models.Flight;
@@ -125,7 +132,46 @@ public class FlightUI extends Application {
             Label departureDateLabel = new Label("Departure Date: " + selectedFlight.getDepartureDate());
             Label arrivalDateLabel = new Label("Arrival Date: " + selectedFlight.getArrivalDate());
 
-            vbox.getChildren().addAll(titleLabel, flightNumberLabel, originLabel, destinationLabel, departureDateLabel, arrivalDateLabel);
+            // Create "Make a Payment" button
+            Button makePaymentButton = new Button("Make a Payment");
+            makePaymentButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    // Prompt the user for passenger name and email
+                    TextInputDialog dialog = new TextInputDialog();
+                    dialog.setTitle("Passenger Information");
+                    dialog.setHeaderText("Please enter your name and email");
+                    dialog.setContentText("Name:");
+                    Optional<String> result = dialog.showAndWait();
+                    if (!result.isPresent()) {
+                        return; // User canceled input
+                    }
+                    String passengerName = result.get();
+                    dialog.setContentText("Email:");
+                    result = dialog.showAndWait();
+                    if (!result.isPresent()) {
+                        return; // User canceled input
+                    }
+                    String passengerEmail = result.get();
+
+                    // Create a Reservation object from the selected flight and passenger information
+                    Reservation reservation = new Reservation(passengerName, passengerEmail, selectedFlight.getFlightNumber(), selectedFlight.getOrigin(), selectedFlight.getDestination(), selectedFlight.getDepartureDate(), selectedFlight.getDepartureTime());
+
+                    PaymentUI paymentUI = new PaymentUI(reservation); // Pass the reservation to the PaymentUI
+                    Scene paymentScene = paymentUI.getScene(); // Assuming you have a getScene() method in PaymentUI class
+
+                    Stage paymentStage = new Stage();
+                    paymentStage.setScene(paymentScene);
+                    paymentStage.setTitle("Payment");
+                    paymentStage.show();
+
+                    popupStage.close(); // Close the Flight Information popup
+                }
+            });
+
+
+
+            vbox.getChildren().addAll(titleLabel, flightNumberLabel, originLabel, destinationLabel, departureDateLabel, arrivalDateLabel, makePaymentButton);
 
             Scene popupScene = new Scene(vbox, 300, 200);
             popupStage.setScene(popupScene);
@@ -133,6 +179,7 @@ public class FlightUI extends Application {
             popupStage.show();
         }
     }
+
 
 
 

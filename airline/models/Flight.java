@@ -100,6 +100,9 @@ public class Flight {
         return departureDate;
     }
 
+    public String getDateAsString() {
+        return this.departureDate;
+    }
 
     // Get destination airport
     public String getDestinationAirport() {

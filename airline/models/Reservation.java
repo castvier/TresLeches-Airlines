@@ -20,8 +20,8 @@ public class Reservation {
         this.arrivalAirport = arrivalAirport;
         this.departureDate = departureDate;
         this.departureTime = departureTime;
-        this.baggage = new Baggage(); // initialize baggage object
     }
+
 
     // Getters
     public String getPassengerName() {

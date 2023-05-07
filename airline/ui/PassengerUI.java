@@ -33,7 +33,9 @@ public class PassengerUI extends Application {
     @Override
     public void start(Stage primaryStage) {
         // Initialize Passenger object with sample data
-        passenger = new Passenger("John Doe", 30, "ABC123", "123 Main St.");
+        // Initialize Passenger object with sample data
+        passenger = new Passenger("John Doe", "john.doe@example.com", "ABC123");
+
 
         // Initialize layout elements
         GridPane gridPane = new GridPane();
