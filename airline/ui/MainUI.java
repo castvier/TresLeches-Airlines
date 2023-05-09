@@ -15,6 +15,12 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextInputDialog;
+import java.util.Optional;
+
 
 /**
  * This class represents the main user interface of the airline application.
@@ -57,7 +63,8 @@ public class MainUI extends Application {
         // Create buttons to navigate to different UIs
         Button reservationButton = createButton("Reservation UI", primaryStage, new ReservationUI());
         Button flightButton = createButton("Flight UI", primaryStage, new FlightUI());
-        Button managerButton = createButton("Manager UI", primaryStage, new ManagerUI());
+        Button managerButton = createButton("Manager UI", primaryStage, new ManagerUI(), event -> showManagerLogin(primaryStage, new ManagerUI()));
+
 
         // Create a grid pane to hold the buttons
         GridPane gridPane = new GridPane();
@@ -156,4 +163,57 @@ public class MainUI extends Application {
 
         return backButton;
     }
+    private Button createButton(String buttonText, Stage primaryStage, Application uiInstance, EventHandler<ActionEvent> handler) {
+        Button button = new Button(buttonText);
+        button.setMinSize(150, 50);
+        if (handler != null) {
+            button.setOnAction(handler);
+        } else {
+            button.setOnAction(event -> {
+                try {
+                    uiInstance.start(primaryStage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
+        return button;
+    }
+
+    private void showManagerLogin(Stage primaryStage, Application uiInstance) {
+        TextInputDialog usernameDialog = new TextInputDialog();
+        usernameDialog.setTitle("Manager Login");
+        usernameDialog.setHeaderText("Please enter your username:");
+        Optional<String> usernameResult = usernameDialog.showAndWait();
+
+        TextInputDialog passwordDialog = new TextInputDialog();
+        passwordDialog.setTitle("Manager Login");
+        passwordDialog.setHeaderText("Please enter your password:");
+        Optional<String> passwordResult = passwordDialog.showAndWait();
+
+        String correctUsername = "manager"; // Replace with the correct manager username
+        String correctPassword = "password"; // Replace with the correct manager password
+
+        if (usernameResult.isPresent() && passwordResult.isPresent()) {
+            String username = usernameResult.get();
+            String password = passwordResult.get();
+
+            if (username.equals(correctUsername) && password.equals(correctPassword)) {
+                try {
+                    uiInstance.start(primaryStage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                // Show an alert if the username or password is incorrect
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Login Error");
+                alert.setHeaderText("Incorrect username or password");
+                alert.setContentText("Please try again.");
+                alert.showAndWait();
+            }
+        }
+    }
+
 }
