@@ -147,10 +147,29 @@ public class FlightManagement {
         return matchingFlights;
     }
 
+    public List<Flight> searchFlightsByDestination(String destination) {
+        List<Flight> matchingFlights = new ArrayList<>();
+
+        for (Flight flight : flights) {
+            if (flight.getDestination().equalsIgnoreCase(destination)) {
+                matchingFlights.add(flight);
+            }
+        }
+        return matchingFlights;
+    }
 
 
 
 
+    public List<Flight> searchFlightsByLocation(String destinationAirport, String departureDate, String departureTime, String location) {
+        List<Flight> matchingFlights = new ArrayList<>();
+        for (Flight flight : flights) {
+            if (flight.getDestination().equalsIgnoreCase(destinationAirport) && flight.getDepartureDate().equalsIgnoreCase(departureDate) && flight.getDepartureTime().equalsIgnoreCase(departureTime) && flight.getLocation().equalsIgnoreCase(location)) {
+                matchingFlights.add(flight);
+            }
+        }
+        return matchingFlights;
+    }
 
     // Add a flight
     public void addFlight(Flight flight) {

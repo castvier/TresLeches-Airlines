@@ -49,6 +49,8 @@ public class FlightUI extends Application {
     private Label timeLabel;
     private TextField timeField;
 
+    private TextField locationField;
+
     private BorderPane borderPane; // declare borderPane as an instance variable
 
     @Override
@@ -61,8 +63,11 @@ public class FlightUI extends Application {
         flightManagement = new FlightManagement(airport);
         flight = new Flight("", airport.getName(), "", "", "", "", 0.0, 0, 0, new Airplane("Model", 150, 3000, "SerialNumber"), FlightStatus.ONTIME);
 
-        timeLabel = new Label("Time:");
+        timeLabel = new Label("");
         timeField = new TextField();
+        timeField.setVisible(false); // Hide the timeField
+        locationField = new TextField();
+        locationField.setVisible(false); // Hide the locationField
         flightListView = new ListView<>(); // Initialize flightListView before updating it
         flightListView.setPrefHeight(200);
 
@@ -75,7 +80,7 @@ public class FlightUI extends Application {
 //        Label headerLabel = new Label("Flight Console");
 //        Label flightNumberLabel = new Label("Flight Number:");
 //        Label dateLabel = new Label("Date:");
-//        Label destinationLabel = new Label("Destination:");
+        Label destinationLabel = new Label("Destination:");
 //        Button addFlightButton = new Button("Add Flight");
 //        Button updateFlightButton = new Button("Update Flight");
 //        Button viewFlightButton = new Button("View Flight");
@@ -85,8 +90,21 @@ public class FlightUI extends Application {
         dateField = new TextField();
         destinationField = new TextField();
         searchResultLabel = new Label();
+        destinationField = new TextField();
 
         vBox.getChildren().addAll(hBox1, hBox2, hBox3, flightListView);
+        hBox2.getChildren().addAll(
+//      new Label("Flight Number:"), flightNumberField,
+//      new Label("Date:"), dateField,
+                timeLabel, timeField,
+                new Label("Destination:"), destinationField,
+                new Label(""), locationField
+        );
+
+        hBox2.setAlignment(Pos.CENTER); // Align the children nodes vertically in the center
+        hBox2.setSpacing(10); // Set the spacing between the children nodes
+
+
 
 //        hBox1.getChildren().add(headerLabel);
 //        hBox2.getChildren().addAll(flightNumberLabel, flightNumberField, dateLabel, dateField,
@@ -143,55 +161,39 @@ public class FlightUI extends Application {
 
             // Create "Make a Payment" button
             Button makePaymentButton = new Button("Make a Payment");
-            makePaymentButton.setOnAction(new EventHandler<ActionEvent>() {
+            // (existing event handler code for makePaymentButton)
+
+            // Create "Reserve a Seat" button
+            Button reserveSeatButton = new Button("Reserve a Seat");
+            reserveSeatButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    // Prompt the user for passenger name and email
-                    TextInputDialog dialog = new TextInputDialog();
-                    dialog.setTitle("Passenger Information");
-                    dialog.setHeaderText("Please enter your name and email");
-                    dialog.setContentText("Name:");
-                    Optional<String> result = dialog.showAndWait();
-                    if (!result.isPresent()) {
-                        return; // User canceled input
+                    // Create a PassengerUI instance
+                    PassengerUI passengerUI = new PassengerUI();
+
+                    // Start the PassengerUI scene
+                    try {
+                        passengerUI.start(primaryStage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    String passengerName = result.get();
-                    dialog.setContentText("Email:");
-                    result = dialog.showAndWait();
-                    if (!result.isPresent()) {
-                        return; // User canceled input
-                    }
-                    String passengerEmail = result.get();
-
-                    // Create a Reservation object from the selected flight and passenger information
-                    Reservation reservation = new Reservation(passengerName, passengerEmail, selectedFlight.getFlightNumber(), selectedFlight.getOrigin(), selectedFlight.getDestination(), selectedFlight.getDepartureDate(), selectedFlight.getDepartureTime());
-
-                    // Create a PaymentUI instance and pass the reservation to its constructor
-                    PaymentUI paymentUI = new PaymentUI(reservation);
-
-                    // Set the PaymentUI scene as the primary stage scene
-                    Scene paymentScene = paymentUI.getScene();
-                    primaryStage.setScene(paymentScene);
-
 
                     // Close the Flight Information popup
                     popupStage.close();
                 }
             });
 
+            vbox.getChildren().addAll(titleLabel, flightNumberLabel, originLabel, destinationLabel, departureDateLabel, arrivalDateLabel, makePaymentButton, reserveSeatButton);
 
-
-
-            vbox.getChildren().addAll(titleLabel, flightNumberLabel, originLabel, destinationLabel, departureDateLabel, arrivalDateLabel, makePaymentButton);
-
-            Scene popupScene = new Scene(vbox, 300, 200);
+            Scene popupScene = new Scene(vbox, 500, 500);
             popupScene.getStylesheets().add(getClass().getResource("flightInfoStyles.css").toExternalForm());
             popupStage.setScene(popupScene);
             popupStage.setTitle("Flight Information");
             popupStage.show();
-
         }
     }
+
+
 
 
 
@@ -204,8 +206,8 @@ public class FlightUI extends Application {
         String destination = destinationField.getText();
 
         // Create and add a time field for departure time
-        Label timeLabel = new Label("Time:");
-        TextField timeField = new TextField();
+//        Label timeLabel = new Label("Time:");
+//        TextField timeField = new TextField();
         // Add the timeField to the scene or layout as needed
 
         // Get the departure time from the timeField
@@ -250,20 +252,20 @@ public class FlightUI extends Application {
         String destinationAirport = destinationField.getText();
         String departureDate = dateField.getText();
         String departureTime = timeField.getText();
+        String location = locationField.getText();
 
         // Generate arbitrary flights only when the "Search Flights" button is clicked
         flightManagement.generateArbitraryFlights();
 
-        List<Flight> matchingFlights = flightManagement.searchFlights(destinationAirport, departureDate, departureTime);
+        // Call the searchFlightsByDestination method to filter flights by destination
+        List<Flight> matchingFlights = flightManagement.searchFlightsByDestination(destinationAirport);
 
-        // Create a new list to hold all flights (arbitrary and matching)
-        List<Flight> allFlights = new ArrayList<>(flightManagement.getFlights());
-        allFlights.addAll(matchingFlights);
-
-        // Update the flightListView with all flights (arbitrary and matching)
+        // Update the flightListView with only matching flights
         flightListView.setVisible(true);
-        updateFlightListView(allFlights);
+        updateFlightListView(matchingFlights);
     }
+
+
 
 
 

@@ -64,7 +64,7 @@ public class MainUI extends Application {
         Button reservationButton = createButton("Reservation UI", primaryStage, new ReservationUI());
         Button flightButton = createButton("Flight UI", primaryStage, new FlightUI());
         Button managerButton = createButton("Manager UI", primaryStage, new ManagerUI(), event -> showManagerLogin(primaryStage, new ManagerUI()));
-
+        Button passengerButton = createButton("Passenger UI", primaryStage, new PassengerUI());
 
         // Create a grid pane to hold the buttons
         GridPane gridPane = new GridPane();
@@ -91,6 +91,7 @@ public class MainUI extends Application {
         gridPane.add(reservationButton, 0, 0);
         gridPane.add(flightButton, 0, 3);
         gridPane.add(managerButton, 1, 3);
+        gridPane.add(passengerButton, 1, 0);
 
         // Set GridPane constraints
         GridPane.setHgrow(gridPane, Priority.ALWAYS);

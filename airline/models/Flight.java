@@ -58,6 +58,16 @@ public class Flight {
         this.destinationAirport = destination;
         this.departureDate = date;
     }
+    private String location;
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public String getArrivalDate() {
         return arrivalDate;
     }

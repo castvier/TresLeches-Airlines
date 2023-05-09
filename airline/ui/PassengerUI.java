@@ -19,19 +19,21 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 
 /**
  * PassengerUI
  */
 public class PassengerUI extends Application {
     // Declare Passenger object and UI input fields
+    private VBox rootPane; // This should be the root container for your PassengerUI layout
     private Passenger passenger;
     private TextField nameField;
     private TextField flightNumberField;
     private TextField seatNumberField;
     private Parent root;
     private BorderPane borderPane; // declare borderPane as an instance variable
-
     @Override
     public void start(Stage primaryStage) {
         // Initialize Passenger object with sample data
@@ -46,8 +48,11 @@ public class PassengerUI extends Application {
         VBox vBox = new VBox();
 
         // Set up the scene
-        Scene scene = new Scene(vBox, 350, 200);
+        Scene scene = new Scene(rootPane, 1024, 1000); // Replace 'vBox' with 'rootPane'
         scene.getStylesheets().add(getClass().getResource("passengerUIStyles.css").toExternalForm());
+        // Add layout containers to the main container and display the application window
+        rootPane.getChildren().addAll(hBox1, gridPane); // Replace 'vBox' with 'rootPane'
+
 
         // Initialize and set UI labels
         Label headerLabel = new Label("Passenger Console");
@@ -84,17 +89,20 @@ public class PassengerUI extends Application {
         gridPane.setAlignment(Pos.CENTER);
 
         // Set button click event handlers
-        reserveButton.setOnAction(e -> handleReserveButton());
+        reserveButton.setOnAction(e -> handleReserveButton(primaryStage));
+
+
         viewBookingButton.setOnAction(e -> handleViewBookingButton());
         cancelBookingButton.setOnAction(e -> handleCancelBookingButton());
 
-        // Add layout containers to the main container and display the application window
-        vBox.getChildren().addAll(hBox1, gridPane);
+//        // Add layout containers to the main container and display the application window
+//        vBox.getChildren().addAll(hBox1, gridPane);
 
 // Add the back button to the UI
         MainUI mainUI = new MainUI();
         Button backButton = mainUI.createBackButton(primaryStage);
-        vBox.getChildren().add(backButton); // Add the backButton to the vBox
+        rootPane.getChildren().add(backButton); // Add the backButton to the rootPane
+
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Passenger Console");
@@ -103,15 +111,18 @@ public class PassengerUI extends Application {
     public PassengerUI() {
         // Initialize and set up the UI components, and set the 'root' variable
         // For example, if you are using a BorderPane as the main layout:
-        root = new BorderPane();
+        rootPane = new VBox();
     }
-
+    public Scene getScene() {
+        // Return a new Scene object based on the rootPane
+        return new Scene(rootPane, 1024, 1000); // You can adjust the size of the scene as needed
+    }
     // Add a getRoot() method to return the root Parent object
     public Parent getRoot() {
         return root;
     }
     // Handle click event for the "Reserve Seat" button
-    public void handleReserveButton() {
+    public void handleReserveButton(Stage primaryStage) {
         // Get input values from UI elements
         String name = nameField.getText();
         String flightNumber = flightNumberField.getText();
@@ -131,9 +142,18 @@ public class PassengerUI extends Application {
         // Uncomment the following lines to create a reservation and add it to the ReservationManager
         // Reservation reservation = new Reservation(seat, passenger, flight);
         // ReservationManager.getInstance().addReservation(reservation);
+        // Create a new instance of PassengerUI and set the primary stage's scene
+        PassengerUI passengerUI = new PassengerUI();
+        passengerUI.switchToPassengerUI(primaryStage);
+        primaryStage.show();
     }
 
 
+    public void switchToPassengerUI(Stage primaryStage) {
+        primaryStage.setScene(getScene());
+        primaryStage.setTitle("Passenger Console");
+        primaryStage.show();
+    }
 
 
     // Handle click event for the "View Booking" button
