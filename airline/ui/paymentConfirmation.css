@@ -1,0 +1,47 @@
+.root {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    /*-fx-background-image: url("../resources/airline/ui/airline/uidetails/airlinebackground.png");*/
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
+
+.label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.text-field {
+    -fx-pref-width: 100px;
+}
+
+.button {
+    -fx-background-color: #1E90FF;
+    -fx-text-fill: #fff;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 5px 15px;
+}
+
+.button:hover {
+    -fx-background-color: #1C86EE;
+}
+
+.grid-pane {
+    -fx-background-color: rgba(240, 248, 255, 0.7);
+    -fx-padding: 20px;
+    -fx-hgap: 10px;
+    -fx-vgap: 10px;
+}
+
+.back-button {
+    -fx-background-color: #1E90FF;
+    -fx-text-fill: #fff;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 5px 15px;
+}
+
+.back-button:hover {
+    -fx-background-color: #1C86EE;
+}

@@ -150,6 +150,8 @@ public class PaymentUI extends Application {
         // Show the confirmation alert with reservation information and payment success
         Alert confirmationAlert = new Alert(AlertType.INFORMATION);
         confirmationAlert.setTitle("Payment Confirmation");
+        confirmationAlert.getDialogPane().getStylesheets().add(getClass().getResource("paymentConfirmation.css").toExternalForm());
+
         confirmationAlert.setHeaderText("Payment Successful!");
         confirmationAlert.setContentText("Reservation Information:\n" +
                 "Passenger Name: " + reservation.getPassengerName() + "\n" +

@@ -185,9 +185,11 @@ public class FlightUI extends Application {
             vbox.getChildren().addAll(titleLabel, flightNumberLabel, originLabel, destinationLabel, departureDateLabel, arrivalDateLabel, makePaymentButton);
 
             Scene popupScene = new Scene(vbox, 300, 200);
+            popupScene.getStylesheets().add(getClass().getResource("flightInfoStyles.css").toExternalForm());
             popupStage.setScene(popupScene);
             popupStage.setTitle("Flight Information");
             popupStage.show();
+
         }
     }
 
