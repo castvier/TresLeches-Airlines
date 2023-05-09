@@ -90,11 +90,11 @@ public class ReservationUI extends Application {
         Label headerLabel = new Label("Reservation Console");
         Label passengerNameLabel = new Label("Passenger Name:");
         Label passengerEmailLabel = new Label("Passenger Email:");
-        Label flightNumberLabel = new Label("Flight Number:");
-        Label departureAirportLabel = new Label("Departure Airport:");
-        Label arrivalAirportLabel = new Label("Arrival Airport:");
-        Label departureDateLabel = new Label("Departure Date:");
-        Label departureTimeLabel = new Label("Departure Time:");
+//        Label flightNumberLabel = new Label("Flight Number:");
+//        Label departureAirportLabel = new Label("Departure Airport:");
+//        Label arrivalAirportLabel = new Label("Arrival Airport:");
+//        Label departureDateLabel = new Label("Departure Date:");
+//        Label departureTimeLabel = new Label("Departure Time:");
         passengerNameField = new TextField();
         passengerEmailField = new TextField();
         flightNumberField = new TextField();
@@ -103,6 +103,11 @@ public class ReservationUI extends Application {
         departureDateField = new TextField();
         departureTimeField = new TextField();
 
+        flightNumberField.setVisible(false);
+        departureAirportField.setVisible(false);
+        arrivalAirportField.setVisible(false);
+        departureDateField.setVisible(false);
+        departureTimeField.setVisible(false);
 
 
         // Create buttons for creating, modifying, and cancelling reservations
@@ -110,17 +115,28 @@ public class ReservationUI extends Application {
         modifyReservationButton = new Button("Modify Reservation");
         cancelReservationButton = new Button("Cancel Reservation");
         reservationLabel = new Label();
+        createReservationButton.setVisible(false);
+        modifyReservationButton.setVisible(false);
+        cancelReservationButton.setVisible(false);
 
 
+        vBox.setAlignment(Pos.CENTER); // Align the VBox to the center of its parent
 
         // Set up UI layout
         hBox1.getChildren().add(headerLabel);
-        hBox2.getChildren().addAll(passengerNameLabel, passengerNameField, passengerEmailLabel, passengerEmailField, flightNumberLabel, flightNumberField);
-        hBox3.getChildren().addAll(departureAirportLabel, departureAirportField, arrivalAirportLabel, arrivalAirportField, departureDateLabel, departureDateField, departureTimeLabel, departureTimeField);
+//        hBox2.getChildren().addAll(passengerNameLabel, passengerNameField, passengerEmailLabel, passengerEmailField, flightNumberLabel, flightNumberField);
+        hBox2.getChildren().addAll(passengerNameLabel, passengerNameField, passengerEmailLabel, passengerEmailField,flightNumberField);
+//        hBox3.getChildren().addAll(departureAirportLabel, departureAirportField, arrivalAirportLabel, arrivalAirportField, departureDateLabel, departureDateField, departureTimeLabel, departureTimeField);
+        hBox3.getChildren().addAll(departureAirportField, arrivalAirportField, departureDateField, departureTimeField);
         vBox.getChildren().addAll(hBox1, hBox2, hBox3, gridPane, createReservationButton, modifyReservationButton, cancelReservationButton, reservationLabel);
+
         VBox.setMargin(hBox2, new Insets(10, 0, 10, 0));
         VBox.setMargin(hBox3, new Insets(10, 0, 10, 0));
         VBox.setMargin(gridPane, new Insets(10, 0, 10, 0));
+        HBox.setMargin(passengerNameField, new Insets(0, 10, 0, 0));
+        HBox.setMargin(passengerEmailLabel, new Insets(0, 10, 0, 10));
+        HBox.setMargin(passengerEmailField, new Insets(0, 0, 0, 10));
+
         hBox1.setAlignment(Pos.CENTER);
         hBox2.setAlignment(Pos.CENTER);
         hBox3.setAlignment(Pos.CENTER);

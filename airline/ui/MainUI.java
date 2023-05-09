@@ -9,54 +9,120 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
+/**
+ * This class represents the main user interface of the airline application.
+ * It displays buttons that allow the user to navigate to different UIs.
+ */
 public class MainUI extends Application {
 
+    /**
+     * The main method that launches the application.
+     *
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * The method that sets up and displays the user interface.
+     *
+     * @param primaryStage the primary stage of the application
+     */
     @Override
     public void start(Stage primaryStage) {
         VBox root = new VBox(10);
         root.setPadding(new Insets(20));
 
+        // Create dummy flight and passenger for testing purposes
         Flight dummyFlight = new Flight("Dummy Flight", "Dummy Origin", "Dummy Destination", "01/01/2023", "00:00", "00:00", 100.0, 100, 100, new Airplane("", 0, 0, ""), FlightStatus.ONTIME);
         Passenger passenger = new Passenger("Dummy Passenger", "dummy@gmail.com", "1234567890");
 
+        // Add logo at the top of the UI
+        ImageView logoImageView = new ImageView(new Image(getClass().getResource("tresLecheslogo.png").toExternalForm()));
+        logoImageView.setFitWidth(200);
+        logoImageView.setFitHeight(100);
+        root.getChildren().add(logoImageView);
 
-        // Fix: Use empty strings for the additional parameters of the Reservation constructor
+        // Create a dummy reservation for testing purposes
         Reservation dummyReservation = new Reservation(dummyFlight.getFlightNumber(), dummyFlight.getOrigin(), dummyFlight.getDestination(), dummyFlight.getDateAsString(), dummyFlight.getDepartureTime(), dummyFlight.getArrivalTime(), passenger.getName());
 
-        Button paymentButton = createButton("Payment UI", primaryStage, new PaymentUI(dummyReservation));
+        // Create buttons to navigate to different UIs
         Button reservationButton = createButton("Reservation UI", primaryStage, new ReservationUI());
-        Button passengerButton = createButton("Passenger UI", primaryStage, new PassengerUI());
-        Button airplaneButton = createButton("Airplane UI", primaryStage, new AirplaneUI());
-        Button airportButton = createButton("Airport UI", primaryStage, new AirportUI());
-        Button baggageButton = createButton("Baggage UI", primaryStage, new BaggageUI());
         Button flightButton = createButton("Flight UI", primaryStage, new FlightUI());
         Button managerButton = createButton("Manager UI", primaryStage, new ManagerUI());
 
+        // Create a grid pane to hold the buttons
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
         gridPane.setVgap(10);
 
+        // Set column constraints
+        for (int i = 0; i < 2; i++) {
+            ColumnConstraints columnConstraints = new ColumnConstraints();
+            columnConstraints.setPercentWidth(50);
+            columnConstraints.setHgrow(Priority.ALWAYS);
+            gridPane.getColumnConstraints().add(columnConstraints);
+        }
+
+        // Set row constraints
+        for (int i = 0; i < 4; i++) {
+            RowConstraints rowConstraints = new RowConstraints();
+            rowConstraints.setPercentHeight(25);
+            rowConstraints.setVgrow(Priority.ALWAYS);
+            gridPane.getRowConstraints().add(rowConstraints);
+        }
+
+        // Add buttons to the grid pane
         gridPane.add(reservationButton, 0, 0);
-        gridPane.add(passengerButton, 1, 0);
-        gridPane.add(paymentButton, 0, 1);
-        gridPane.add(airplaneButton, 1, 1);
-        gridPane.add(airportButton, 0, 2);
-        gridPane.add(baggageButton, 1, 2);
-        gridPane.add(flightButton, 1, 3);
-        gridPane.add(managerButton, 0, 4);
+        gridPane.add(flightButton, 0, 3);
+        gridPane.add(managerButton, 1, 3);
+
+        // Set GridPane constraints
+        GridPane.setHgrow(gridPane, Priority.ALWAYS);
+        GridPane.setVgrow(gridPane, Priority.ALWAYS);
 
         root.getChildren().add(gridPane);
 
-        primaryStage.setScene(new Scene(root, 400, 600));
+        // Set up and display the scene
+        Scene scene = new Scene(root, 1024, 1000);
+        scene.getStylesheets().add(getClass().getResource("mainUIStyles.css").toExternalForm());
+        primaryStage.setScene(scene);
         primaryStage.setTitle("Main UI");
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
+
+    /**
+     * Sets the position constraints of a given button in an AnchorPane.
+     *
+     * @param button the button to set constraints for
+     * @param xRatio the x-coordinate ratio of the button's position in the pane (0.0 to 1.0)
+     * @param yRatio the y-coordinate ratio of the button's position in the pane (0.0 to 1.0)
+     */
+    private void setButtonConstraints(Button button, double xRatio, double yRatio) {
+        AnchorPane.setTopAnchor(button, yRatio * 100);
+        AnchorPane.setLeftAnchor(button, xRatio * 100);
+        AnchorPane.setRightAnchor(button, (1 - xRatio) * 100);
+        AnchorPane.setBottomAnchor(button, (1 - yRatio) * 100);
+    }
+
+    /**
+     * Creates a button with the given text and sets its size and action.
+     *
+     * @param buttonText   The text to display on the button.
+     * @param primaryStage The main stage of the application.
+     * @param uiInstance   The instance of the UI to launch when the button is clicked.
+     * @return The created button.
+     */
     private Button createButton(String buttonText, Stage primaryStage, Application uiInstance) {
         Button button = new Button(buttonText);
         button.setMinSize(150, 50);
@@ -71,6 +137,12 @@ public class MainUI extends Application {
         return button;
     }
 
+    /**
+     * Creates a back button and sets its size and action to return to the main UI.
+     *
+     * @param primaryStage The main stage of the application.
+     * @return The created back button.
+     */
     public Button createBackButton(Stage primaryStage) {
         Button backButton = new Button("Back");
         backButton.setMinSize(100, 30);

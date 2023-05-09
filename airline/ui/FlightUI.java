@@ -72,14 +72,14 @@ public class FlightUI extends Application {
         HBox hBox1 = new HBox();
         HBox hBox2 = new HBox();
         HBox hBox3 = new HBox();
-        Label headerLabel = new Label("Flight Console");
-        Label flightNumberLabel = new Label("Flight Number:");
-        Label dateLabel = new Label("Date:");
-        Label destinationLabel = new Label("Destination:");
-        Button addFlightButton = new Button("Add Flight");
-        Button updateFlightButton = new Button("Update Flight");
-        Button viewFlightButton = new Button("View Flight");
-        Button deleteFlightButton = new Button("Delete Flight");
+//        Label headerLabel = new Label("Flight Console");
+//        Label flightNumberLabel = new Label("Flight Number:");
+//        Label dateLabel = new Label("Date:");
+//        Label destinationLabel = new Label("Destination:");
+//        Button addFlightButton = new Button("Add Flight");
+//        Button updateFlightButton = new Button("Update Flight");
+//        Button viewFlightButton = new Button("View Flight");
+//        Button deleteFlightButton = new Button("Delete Flight");
         Button searchFlightButton = new Button("Search Flights");
         flightNumberField = new TextField();
         dateField = new TextField();
@@ -88,25 +88,26 @@ public class FlightUI extends Application {
 
         vBox.getChildren().addAll(hBox1, hBox2, hBox3, flightListView);
 
-        hBox1.getChildren().add(headerLabel);
-        hBox2.getChildren().addAll(flightNumberLabel, flightNumberField, dateLabel, dateField,
-                timeLabel, timeField, destinationLabel, destinationField, addFlightButton);
-        hBox3.getChildren().addAll(updateFlightButton, viewFlightButton, deleteFlightButton);
+//        hBox1.getChildren().add(headerLabel);
+//        hBox2.getChildren().addAll(flightNumberLabel, flightNumberField, dateLabel, dateField,
+//                timeLabel, timeField, destinationLabel, destinationField, addFlightButton);
+////        HBox hBox3 = new HBox();
+//        hBox3.getChildren().addAll(updateFlightButton, viewFlightButton, deleteFlightButton);
         hBox3.getChildren().add(searchFlightButton);
-        VBox.setMargin(hBox2, new Insets(10, 0, 10, 0));
+        hBox3.setAlignment(Pos.CENTER); // Align the buttons to the center
         VBox.setMargin(hBox3, new Insets(10, 0, 10, 0));
 
-        // Set up event handlers
-        addFlightButton.setOnAction(e -> handleAddFlightButton());
-        updateFlightButton.setOnAction(e -> handleUpdateFlightButton());
-        viewFlightButton.setOnAction(e -> handleViewFlightButton());
-        deleteFlightButton.setOnAction(e -> handleDeleteFlightButton());
+//        // Set up event handlers
+//        addFlightButton.setOnAction(e -> handleAddFlightButton());
+//        updateFlightButton.setOnAction(e -> handleUpdateFlightButton());
+//        viewFlightButton.setOnAction(e -> handleViewFlightButton());
+//        deleteFlightButton.setOnAction(e -> handleDeleteFlightButton());
         searchFlightButton.setOnAction(e -> handleSearchFlightButton());
         flightListView.setOnMouseClicked(e -> handleFlightListViewClick());
 
 
         // Set up the scene and stage
-        Scene scene = new Scene(borderPane, 600, 450);
+        Scene scene = new Scene(borderPane, 1024, 1000);
         scene.getStylesheets().add(getClass().getResource("flightUIStyles.css").toExternalForm());
         borderPane.setCenter(vBox);
         primaryStage.setScene(scene);

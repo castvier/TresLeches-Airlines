@@ -29,7 +29,7 @@ public class PassengerUI extends Application {
     private TextField nameField;
     private TextField flightNumberField;
     private TextField seatNumberField;
-
+    private Parent root;
     private BorderPane borderPane; // declare borderPane as an instance variable
 
     @Override
@@ -100,7 +100,16 @@ public class PassengerUI extends Application {
         primaryStage.setTitle("Passenger Console");
         primaryStage.show();
     }
+    public PassengerUI() {
+        // Initialize and set up the UI components, and set the 'root' variable
+        // For example, if you are using a BorderPane as the main layout:
+        root = new BorderPane();
+    }
 
+    // Add a getRoot() method to return the root Parent object
+    public Parent getRoot() {
+        return root;
+    }
     // Handle click event for the "Reserve Seat" button
     public void handleReserveButton() {
         // Get input values from UI elements
