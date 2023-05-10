@@ -11,12 +11,13 @@ public class Seat {
         this.seatClass = seatClass;
     }
 
-    public String getNumber() {
-        return number;
-    }
 
     public boolean isAvailable() {
         return isAvailable;
+    }
+
+    public SeatClass getSeatClass() {
+        return seatClass;
     }
 
     public void setAvailable(boolean isAvailable) {

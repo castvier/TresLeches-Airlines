@@ -1,7 +1,7 @@
 package com.airline.ui;
 import javafx.scene.Parent;
 import com.airline.models.Airport;
-
+import com.airline.models.SeatClass;
 import com.airline.models.Seat;
 import com.airline.management.FlightManagement;
 import com.airline.models.Airplane;
@@ -47,7 +47,7 @@ public class PassengerUI extends Application {
     private TextField flightNumberField;
     private TextField seatNumberField;
 
-
+    private Flight selectedFlight;
     private BorderPane borderPane; // declare borderPane as an instance variable
     @Override
     public void start(Stage primaryStage) {
@@ -64,7 +64,7 @@ public class PassengerUI extends Application {
 //        FlightManagement flightManagement = new FlightManagement();
 //        PassengerUI passengerUI = new PassengerUI(flightManagement);
 
-        // Initialize layout elements
+        rootPane = new VBox(); // Initialize rootPane here
         GridPane gridPane = new GridPane();
         HBox hBox1 = new HBox();
         HBox hBox2 = new HBox();
@@ -130,26 +130,29 @@ public class PassengerUI extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Passenger Console");
         primaryStage.show();
+        displayAvailableSeats();
     }
 
+    // Handle click event for the "View Available Seats" button
     // Handle click event for the "View Available Seats" button
     public void handleViewAvailableSeatsButton() {
         String flightNumber = flightNumberField.getText();
         Flight flight = getFlightByFlightNumber(flightNumber);
         if (flight != null) {
             List<com.airline.models.Seat> availableSeats = flight.getAvailableSeats();
-            availableSeats.forEach(seat -> System.out.println("Available seat: " + seat.getNumber()));
+            availableSeats.forEach(seat -> System.out.println("Available seat: " + seat.getSeatNumber())); // Changed to getSeatNumber()
         } else {
             System.out.println("No flight found with the provided flight number.");
         }
     }
 
+
     public PassengerUI(FlightManagement flightManagement) {
         this.flightManagement = flightManagement;
-
-        // Initialize and set up the UI components, and set the 'root' variable
-        // For example, if you are using a BorderPane as the main layout:
-        rootPane = new VBox();
+//
+//        // Initialize and set up the UI components, and set the 'root' variable
+//        // For example, if you are using a BorderPane as the main layout:
+//        rootPane = new VBox();
     }
 
 
@@ -169,9 +172,9 @@ public class PassengerUI extends Application {
 
 
     public PassengerUI() {
-        // Initialize and set up the UI components, and set the 'root' variable
-        // For example, if you are using a BorderPane as the main layout:
-        rootPane = new VBox();
+//        // Initialize and set up the UI components, and set the 'root' variable
+//        // For example, if you are using a BorderPane as the main layout:
+//        rootPane = new VBox();
     }
     public Scene getScene() {
         // Return a new Scene object based on the rootPane
@@ -190,7 +193,11 @@ public class PassengerUI extends Application {
 
         // Update Passenger object and create new Seat, Airplane, and Flight objects
         passenger.setName(name);
-        Seat seat= new Seat(seatNumber);
+
+        // Example: Set the seat class to ECONOMY for all seats
+        SeatClass seatClass = SeatClass.ECONOMY; // Or another logic to determine the seat class
+        Seat seat = new Seat(seatNumber, seatClass);
+//        Seat seat= new Seat(seatNumber);
         Airplane airplane = new Airplane("Boeing 747", 366, 10000, "ABC123");
         String departureDate = "2023-06-01"; // Add departure date
         String departureTime = "10:00";
@@ -206,6 +213,7 @@ public class PassengerUI extends Application {
         PassengerUI passengerUI = new PassengerUI();
         passengerUI.switchToPassengerUI(primaryStage);
         primaryStage.show();
+        displayAvailableSeats();
     }
 
 
@@ -223,6 +231,15 @@ public class PassengerUI extends Application {
         // Uncomment the following line to search for reservations by passenger name and print them
         // ReservationManager.getInstance().searchReservationsByPassengerName(name).forEach(System.out::println);
     }
+    // Display available seats
+    private void displayAvailableSeats() {
+        List<Seat> availableSeats = selectedFlight.getAvailableSeats();
+        for (Seat seat : availableSeats) {
+            // Display seat information
+            // You can modify this line to display the seat information in the desired format
+            System.out.println("Seat: " + seat.getSeatNumber() + " | Class: " + seat.getSeatClass());
+        }
+    }
 
     // Handle click event for the "Cancel Booking" button
     public void handleCancelBookingButton() {
@@ -232,28 +249,10 @@ public class PassengerUI extends Application {
         // ReservationManager.getInstance().cancelReservationByPassengerName(name);
     }
 
-    // Seat class definition
-    public class Seat {
-        private String number;
-        private boolean isAvailable;
-
-        public Seat(String number) {
-            this.number = number;
-            this.isAvailable = true;
-        }
-
-        public String getNumber() {
-            return number;
-        }
-
-        public boolean isAvailable() {
-            return isAvailable;
-        }
-
-        public void setAvailable(boolean isAvailable) {
-            this.isAvailable = isAvailable;
-        }
+    public PassengerUI(Flight selectedFlight) {
+        this.selectedFlight = selectedFlight;
     }
+
 
     public Parent getRoot2() {
         return borderPane; // Return the instance variable borderPane as the root of the UI
