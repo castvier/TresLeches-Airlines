@@ -4,6 +4,14 @@ import com.airline.models.Airport;
 import com.airline.models.Flight;
 import com.airline.models.Airplane;
 import com.airline.models.FlightStatus;
+import com.airline.models.Seat;
+import javax.swing.JList;
+import javax.swing.JTextArea;
+import javax.swing.JList;
+import javax.swing.JTextArea;
+import com.airline.models.SeatClass;
+import com.airline.models.SeatStatus;
+
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -103,6 +111,36 @@ public class FlightManagement {
             addFlight(flight);
         }
     }
+
+    public void generateArbitrarySeats(JList flightList, JTextArea flightInfoDisplay, JTextArea seatSelectionDisplay) {
+        // Get the selected flight
+        Flight selectedFlight = (Flight) flightList.getSelectedValue();
+
+        if (selectedFlight != null) {
+            // Generate arbitrary seats for the selected flight
+            List<Seat> availableSeats = selectedFlight.getAvailableSeats();
+            StringBuilder sb = new StringBuilder("Available Seats:\n");
+            for (Seat seat : availableSeats) {
+                sb.append(seat.getSeatNumber()).append("\n");
+            }
+
+            // Update the selected flight with the generated seats
+            selectedFlight.setSeats(availableSeats);
+
+            // Update the flight information display
+            flightInfoDisplay.setText(selectedFlight.toString());
+
+            // Update the seat selection display
+            seatSelectionDisplay.setText(sb.toString());
+        }
+    }
+
+
+
+
+
+
+
 
 
 

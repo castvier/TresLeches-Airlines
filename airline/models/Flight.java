@@ -1,5 +1,8 @@
 package com.airline.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Flight {
 
@@ -14,8 +17,9 @@ public class Flight {
     private int availableSeats;
     private String arrivalDate;
     private int duration;
+    private List<Seat> seats;
 
-    private FlightStatus flightStatus; // Changed the type from String to FlightStatus
+    private FlightStatus flightStatus;
 
     public Flight(String flightNumber, String originAirport, String destinationAirport, String departureDate, String departureTime, String arrivalDate, double ticketPrice, int availableSeats, int duration, Airplane airplane, FlightStatus flightStatus) {
         this.flightNumber = flightNumber;
@@ -28,13 +32,8 @@ public class Flight {
         this.availableSeats = availableSeats;
         this.duration = duration;
         this.airplane = airplane;
-        this.flightStatus = flightStatus; // This should work now
+        this.flightStatus = flightStatus;
     }
-
-
-
-
-
 
 
     public FlightStatus getFlightStatus() {
@@ -45,19 +44,16 @@ public class Flight {
         this.flightStatus = flightStatus;
     }
 
-
-    // Add a getter for duration
     public int getDuration() {
         return duration;
     }
 
-
-    // Update flight data
     public void updateFlight(String flightNumber, String destination, String date) {
         this.flightNumber = flightNumber;
         this.destinationAirport = destination;
         this.departureDate = date;
     }
+
     private String location;
 
     public String getLocation() {
@@ -72,27 +68,20 @@ public class Flight {
         return arrivalDate;
     }
 
-    // Format flight details as a string
-    // Format flight details as a string
     public String getDetails() {
         return String.format("Flight Number: %s, Origin: %s, Destination: %s, Departure Date: %s, Departure Time: %s, Arrival Date: %s, Arrival Time: %s, Airplane: %s, Ticket Price: %.2f, Available Seats: %d",
                 flightNumber, originAirport, destinationAirport, departureDate, departureTime, arrivalDate, arrivalTime, airplane.getModel(), ticketPrice, availableSeats);
     }
 
+//    public int getAvailableSeats() {
+//        return availableSeats;
+//    }
 
-
-    // Get available seats
-    public int getAvailableSeats() {
-        return availableSeats;
-    }
-
-    // Get flight details as a string
     public String viewFlight() {
         String flightInfo = "Flight Details:\n" + getDetails();
         return flightInfo;
     }
 
-    // Reserve a seat
     public boolean reserveSeat() {
         if(this.availableSeats > 0){
             this.availableSeats--;
@@ -102,10 +91,26 @@ public class Flight {
         }
     }
 
-    // Get flight number
+    public List<Seat> getAvailableSeats() {
+        List<Seat> availableSeats = new ArrayList<>();
+        for (Seat seat : airplane.getSeats()) {
+            if (seat.isAvailable()) {
+                availableSeats.add(seat);
+            }
+        }
+        return availableSeats;
+    }
+
+
     public String getNumber() {
         return this.flightNumber;
     }
+    public void setSeats(List<Seat> seats) {
+        this.seats = seats;
+    }
+
+
+
 
     // Set departure time
     public void setDepartureTime(String departureTime) {
@@ -114,7 +119,8 @@ public class Flight {
 
     // Set arrival time
     public void setArrivalTime(String arrivalTime) {
-        this.arrivalTime= departureTime;
+        this.arrivalTime = arrivalTime;
+
     }
 
     // Get origin airport

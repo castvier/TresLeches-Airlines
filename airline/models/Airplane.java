@@ -1,44 +1,50 @@
 package com.airline.models;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Airplane {
     private int id;
-    private final String model; //Edwin
+    private final String model;
     private final int capacity;
     private final int range;
     private final String serialNumber;
-    // Add a constructor without 'id' parameter
+    private List<Seat> seats;
+    private int availableSeats;
+    public Airplane(String model, int capacity) {
+        this(model, capacity, 0, "");
+    }
+
     public Airplane(String model, int capacity, int range, String serialNumber) {
         this.model = model;
         this.capacity = capacity;
         this.range = range;
         this.serialNumber = serialNumber;
+        this.seats = new ArrayList<>();
     }
 
-    public Airplane(String model, int capacity) {
-        this.model = model;
-        this.capacity = capacity;
-        this.range = 0;
-        this.serialNumber = "";
+    public int getAvailableSeats() {
+        return availableSeats;
+    }
+    public void setAvailableSeats(int availableSeats) {
+        this.availableSeats = availableSeats;
+    }
+    public List<Seat> getSeats() {
+        return seats;
     }
 
-
-
-    //get model
     public String getModel(){
         return model;
     }
 
-    //get capacity
     public int getCapacity(){
         return capacity;
     }
 
-    //get range
     public int getRange(){
         return range;
     }
 
-    //get serial number
     public String getSerialNumber(){
         return serialNumber;
     }
@@ -50,6 +56,4 @@ public class Airplane {
     public void setId(int id) {
         this.id = id;
     }
-
 }
-

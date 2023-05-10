@@ -177,7 +177,7 @@ public class FlightManagementUI extends Application {
             String arrivalTime = arrivalTimeField.getText();
             Airplane airplane = oldFlight.getAirplane();
             double ticketPrice = oldFlight.getTicketPrice();
-            int availableSeats = oldFlight.getAvailableSeats();
+            int availableSeats = airplane.getAvailableSeats();
             int duration = oldFlight.getDuration();
             FlightStatus flightStatus = oldFlight.getFlightStatus(); // add this line
             Flight updatedFlight = new Flight(
@@ -188,7 +188,7 @@ public class FlightManagementUI extends Application {
                     departureTime,
                     oldFlight.getArrivalDate(), // use the original arrival date
                     oldFlight.getTicketPrice(),
-                    oldFlight.getAvailableSeats(),
+                    airplane.getAvailableSeats(),
                     oldFlight.getDuration(),
                     oldFlight.getAirplane(),
                     flightStatus // use the updated flight status

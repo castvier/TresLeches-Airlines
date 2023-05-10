@@ -1,7 +1,9 @@
 package com.airline.ui;
 import javafx.scene.Parent;
+import com.airline.models.Airport;
 
-
+import com.airline.models.Seat;
+import com.airline.management.FlightManagement;
 import com.airline.models.Airplane;
 import com.airline.models.Flight;
 import com.airline.models.Passenger;
@@ -21,25 +23,46 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.StackPane;
+
 
 /**
  * PassengerUI
  */
 public class PassengerUI extends Application {
     // Declare Passenger object and UI input fields
+    Airport airport = new Airport("Airport Name");
+
+    FlightManagement flightManagement = new FlightManagement(airport);
+
+//    private FlightManagement flightManagement = new FlightManagement();
     private VBox rootPane; // This should be the root container for your PassengerUI layout
     private Passenger passenger;
     private TextField nameField;
     private TextField flightNumberField;
     private TextField seatNumberField;
-    private Parent root;
+
+
     private BorderPane borderPane; // declare borderPane as an instance variable
     @Override
     public void start(Stage primaryStage) {
         // Initialize Passenger object with sample data
         // Initialize Passenger object with sample data
         passenger = new Passenger("John Doe", "john.doe@example.com", "ABC123");
+//        Airport airport = new Airport("Airport Name");
+//
+//        FlightManagement flightManagement = new FlightManagement(airport);
+        PassengerUI passengerUI = new PassengerUI(flightManagement);
 
+
+//        // Create a FlightManagement object and pass it to the PassengerUI constructor
+//        FlightManagement flightManagement = new FlightManagement();
+//        PassengerUI passengerUI = new PassengerUI(flightManagement);
 
         // Initialize layout elements
         GridPane gridPane = new GridPane();
@@ -62,7 +85,7 @@ public class PassengerUI extends Application {
 
         // Initialize and set UI buttons
         Button reserveButton = new Button("Reserve Seat");
-        Button viewBookingButton = new Button("View Booking");
+        Button viewAvailableSeatsButton = new Button("View Available Seats");
         Button cancelBookingButton = new Button("Cancel Booking");
 
         // Initialize and set UI input fields
@@ -78,7 +101,7 @@ public class PassengerUI extends Application {
         gridPane.add(flightNumberField, 1, 1);
         gridPane.add(seatNumberLabel, 0, 2);
         gridPane.add(seatNumberField, 1, 2);
-        hBox2.getChildren().addAll(reserveButton, viewBookingButton, cancelBookingButton);
+        hBox2.getChildren().addAll(reserveButton, viewAvailableSeatsButton, cancelBookingButton);
         gridPane.add(hBox2, 1, 3);
 
         // Set layout margins and alignment
@@ -92,7 +115,7 @@ public class PassengerUI extends Application {
         reserveButton.setOnAction(e -> handleReserveButton(primaryStage));
 
 
-        viewBookingButton.setOnAction(e -> handleViewBookingButton());
+        viewAvailableSeatsButton.setOnAction(e -> handleViewAvailableSeatsButton());
         cancelBookingButton.setOnAction(e -> handleCancelBookingButton());
 
 //        // Add layout containers to the main container and display the application window
@@ -108,6 +131,43 @@ public class PassengerUI extends Application {
         primaryStage.setTitle("Passenger Console");
         primaryStage.show();
     }
+
+    // Handle click event for the "View Available Seats" button
+    public void handleViewAvailableSeatsButton() {
+        String flightNumber = flightNumberField.getText();
+        Flight flight = getFlightByFlightNumber(flightNumber);
+        if (flight != null) {
+            List<com.airline.models.Seat> availableSeats = flight.getAvailableSeats();
+            availableSeats.forEach(seat -> System.out.println("Available seat: " + seat.getNumber()));
+        } else {
+            System.out.println("No flight found with the provided flight number.");
+        }
+    }
+
+    public PassengerUI(FlightManagement flightManagement) {
+        this.flightManagement = flightManagement;
+
+        // Initialize and set up the UI components, and set the 'root' variable
+        // For example, if you are using a BorderPane as the main layout:
+        rootPane = new VBox();
+    }
+
+
+    public Flight getFlightByFlightNumber(String flightNumber) {
+        // Retrieve the flights list from the FlightManagement class
+        List<Flight> flights = flightManagement.getFlights();
+
+        for (Flight flight : flights) {
+            if (flight.getFlightNumber().equals(flightNumber)) {
+                return flight;
+            }
+        }
+        return null;
+    }
+
+
+
+
     public PassengerUI() {
         // Initialize and set up the UI components, and set the 'root' variable
         // For example, if you are using a BorderPane as the main layout:
@@ -118,9 +178,9 @@ public class PassengerUI extends Application {
         return new Scene(rootPane, 1024, 1000); // You can adjust the size of the scene as needed
     }
     // Add a getRoot() method to return the root Parent object
-    public Parent getRoot() {
-        return root;
-    }
+//    public Parent getRoot() {
+//        return root;
+//    }
     // Handle click event for the "Reserve Seat" button
     public void handleReserveButton(Stage primaryStage) {
         // Get input values from UI elements
