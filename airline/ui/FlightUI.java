@@ -164,12 +164,12 @@ public class FlightUI extends Application {
             // (existing event handler code for makePaymentButton)
 
             // Create "Reserve a Seat" button
-            Button reserveSeatButton = new Button("Reserve a Seat");
+//            Button reserveSeatButton = new Button("Reserve a Seat");
             Button viewAvailableSeatsButton = new Button("View Available Seats");
             viewAvailableSeatsButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    // Create a PassengerUI instance with the selected Flight object
+                    // Create a PassengerUI instance with the selected Flight objectMake
                     PassengerUI passengerUI = new PassengerUI(selectedFlight);
 
                     // Start the PassengerUI scene
@@ -184,8 +184,8 @@ public class FlightUI extends Application {
                 }
             });
 
-            vbox.getChildren().addAll(titleLabel, flightNumberLabel, originLabel, destinationLabel, departureDateLabel, arrivalDateLabel, makePaymentButton, reserveSeatButton, viewAvailableSeatsButton);
-
+//            vbox.getChildren().addAll(titleLabel, flightNumberLabel, originLabel, destinationLabel, departureDateLabel, arrivalDateLabel, makePaymentButton, reserveSeatButton, viewAvailableSeatsButton);
+            vbox.getChildren().addAll(titleLabel, flightNumberLabel, originLabel, destinationLabel, departureDateLabel, arrivalDateLabel, makePaymentButton,viewAvailableSeatsButton);
 
             Scene popupScene = new Scene(vbox, 500, 500);
             popupScene.getStylesheets().add(getClass().getResource("flightInfoStyles.css").toExternalForm());

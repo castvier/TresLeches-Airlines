@@ -37,7 +37,7 @@ import javafx.scene.layout.StackPane;
 public class PassengerUI extends Application {
     // Declare Passenger object and UI input fields
     Airport airport = new Airport("Airport Name");
-
+    String defaultFlightNumber = "ABC123"; // Replace with a valid flight number
     FlightManagement flightManagement = new FlightManagement(airport);
 
 //    private FlightManagement flightManagement = new FlightManagement();
@@ -63,7 +63,8 @@ public class PassengerUI extends Application {
 //        // Create a FlightManagement object and pass it to the PassengerUI constructor
 //        FlightManagement flightManagement = new FlightManagement();
 //        PassengerUI passengerUI = new PassengerUI(flightManagement);
-
+        selectedFlight = getFlightByFlightNumber(defaultFlightNumber);
+        displayAvailableSeats();
         rootPane = new VBox(); // Initialize rootPane here
         GridPane gridPane = new GridPane();
         HBox hBox1 = new HBox();

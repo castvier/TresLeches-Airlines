@@ -143,7 +143,7 @@ public class ReservationUI extends Application {
         createReservationButton.setOnAction(e -> handleCreateReservationButton(primaryStage));
         modifyReservationButton.setOnAction(e -> handleModifyReservationButton());
         cancelReservationButton.setOnAction(e -> handleCancelReservationButton());
-        Scene scene = new Scene(borderPane, 800, 450);
+        Scene scene = new Scene(borderPane, 1024, 1000);
         scene.getStylesheets().add(getClass().getResource("reservationUIStyles.css").toExternalForm());
         borderPane.setCenter(vBox);
         primaryStage.setScene(scene);

@@ -85,7 +85,7 @@ public class ManagerUI extends Application {
         searchButton.setOnAction(e -> handleSearchButton());
 
         // Set up the scene and show the stage
-        Scene scene = new Scene(borderPane, 450, 300);
+        Scene scene = new Scene(borderPane, 1024, 1000);
         scene.getStylesheets().add(getClass().getResource("managerUIStyles.css").toExternalForm());
         borderPane.setCenter(vBox);
         primaryStage.setScene(scene);
